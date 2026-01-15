@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id                String             @id @default(uuid())
+  email             String             @unique
+  password          String? 
+  name              String?
+  googleId          String?            @unique
+  provider          AuthProvider       @default(EMAIL)
+  createdAt         DateTime           @default(now())
+  checkIns          CheckIn[]
+  journalEntries    JournalEntry[]
+  assessmentResults AssessmentResult[]
+}
+
+
+model CheckIn {
+  id        String   @id @default(uuid())
+  date      DateTime @unique
+  stress    Int
+  mood      Int
+  energy    Int
+  sleep     Int
+  notes     String?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+}
+
+model Assessment {
+  id           String   @id @default(uuid())
+  title        String   @unique
+  description  String?
+  duration     Int
+  isIndividual Boolean  @default(true)
+  category    AssessmentCategory?    @relation(fields: [categoryId], references: [id])
+  categoryId   String?
+  // questions   Question[]
+  // diagnoses   Diagnosis[]
+  validated    Boolean  @default(false)
+  icon         String?
+  createdAt    DateTime @default(now())
+}
+
+model AssessmentResult {
+  id              String   @id @default(uuid())
+  assessmentId    String
+  assessmentTitle String
+  answers         Json
+  totalScore      Int?
+  diagnosis       String?
+  createdAt       DateTime @default(now())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+}
+
+model JournalEntry {
+  id        String   @id @default(uuid())
+  userId    String
+  date      DateTime
+  title     String?
+  feeling   String
+  thoughts  String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+
+model AssessmentCategory {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  assessments Assessment[]
+}
+
+enum AuthProvider {
+  EMAIL
+  GOOGLE
+}
