@@ -14,11 +14,18 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Role {
+  USER
+  ADMIN
+  SUPERADMIN
+}
+
 model User {
   id                String             @id @default(uuid())
   email             String             @unique
-  password          String? 
+  password          String?
   name              String?
+  role              Role               @default(USER)
   googleId          String?            @unique
   provider          AuthProvider       @default(EMAIL)
   createdAt         DateTime           @default(now())
@@ -27,33 +34,41 @@ model User {
   assessmentResults AssessmentResult[]
 }
 
-
 model CheckIn {
   id        String   @id @default(uuid())
-  date      DateTime @unique
+  date      DateTime
   stress    Int
   mood      Int
   energy    Int
   sleep     Int
   notes     String?
   createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
+
+  @@unique([userId, date])
 }
 
 model Assessment {
-  id           String   @id @default(uuid())
-  title        String   @unique
+  id           String              @id @default(uuid())
+  title        String              @unique
   description  String?
   duration     Int
-  isIndividual Boolean  @default(true)
-  category    AssessmentCategory?    @relation(fields: [categoryId], references: [id])
+  isIndividual Boolean             @default(true)
+  category     AssessmentCategory? @relation(fields: [categoryId], references: [id])
   categoryId   String?
-  // questions   Question[]
-  // diagnoses   Diagnosis[]
-  validated    Boolean  @default(false)
+  questions    Json
+  diagnoses    Json
+  validated    Boolean             @default(false)
   icon         String?
-  createdAt    DateTime @default(now())
+  createdAt    DateTime            @default(now())
+}
+
+model AssessmentCategory {
+  id          String       @id @default(uuid())
+  name        String       @unique
+  createdAt   DateTime     @default(now())
+  assessments Assessment[]
 }
 
 model AssessmentResult {
@@ -77,14 +92,6 @@ model JournalEntry {
   thoughts  String
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
-}
-
-
-model AssessmentCategory {
-  id        String   @id @default(uuid())
-  name      String   @unique
-  createdAt DateTime @default(now())
-  assessments Assessment[]
 }
 
 enum AuthProvider {

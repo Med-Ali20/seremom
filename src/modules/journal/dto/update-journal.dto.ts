@@ -1,4 +1,4 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { CreateJournalDto } from './create-journal.dto';
+import { CreateJournalEntryDto } from './create-journal.dto';
 
-export class UpdateJournalDto extends PartialType(CreateJournalDto) {}
+export class UpdateJournalEntryDto extends PartialType(CreateJournalEntryDto) {}
