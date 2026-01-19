@@ -278,10 +278,11 @@ export type CheckInOrderByWithRelationInput = {
 
 export type CheckInWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  date?: Date | string
+  userId_date?: Prisma.CheckInUserIdDateCompoundUniqueInput
   AND?: Prisma.CheckInWhereInput | Prisma.CheckInWhereInput[]
   OR?: Prisma.CheckInWhereInput[]
   NOT?: Prisma.CheckInWhereInput | Prisma.CheckInWhereInput[]
+  date?: Prisma.DateTimeFilter<"CheckIn"> | Date | string
   stress?: Prisma.IntFilter<"CheckIn"> | number
   mood?: Prisma.IntFilter<"CheckIn"> | number
   energy?: Prisma.IntFilter<"CheckIn"> | number
@@ -290,7 +291,7 @@ export type CheckInWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"CheckIn"> | Date | string
   userId?: Prisma.StringFilter<"CheckIn"> | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-}, "id" | "date">
+}, "id" | "userId_date">
 
 export type CheckInOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -415,6 +416,11 @@ export type CheckInListRelationFilter = {
 
 export type CheckInOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type CheckInUserIdDateCompoundUniqueInput = {
+  userId: string
+  date: Date | string
 }
 
 export type CheckInCountOrderByAggregateInput = {

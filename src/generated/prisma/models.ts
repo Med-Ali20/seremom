@@ -9,8 +9,11 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User'
+export type * from './models/ChatConversation'
+export type * from './models/ChatMessage'
 export type * from './models/CheckIn'
 export type * from './models/Assessment'
+export type * from './models/AssessmentCategory'
 export type * from './models/AssessmentResult'
 export type * from './models/JournalEntry'
 export type * from './commonInputTypes'

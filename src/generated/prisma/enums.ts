@@ -9,6 +9,24 @@
 * 🟢 You can import this file directly.
 */
 
+export const Role = {
+  USER: 'USER',
+  ADMIN: 'ADMIN',
+  SUPERADMIN: 'SUPERADMIN'
+} as const
+
+export type Role = (typeof Role)[keyof typeof Role]
+
+
+export const MessageRole = {
+  USER: 'USER',
+  ASSISTANT: 'ASSISTANT',
+  SYSTEM: 'SYSTEM'
+} as const
+
+export type MessageRole = (typeof MessageRole)[keyof typeof MessageRole]
+
+
 export const AuthProvider = {
   EMAIL: 'EMAIL',
   GOOGLE: 'GOOGLE'

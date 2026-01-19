@@ -1,23 +1,57 @@
-import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, ConflictException, OnModuleInit } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '../prisma/prisma.service';
+import { Role } from './enums/role.enum';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
-export class AuthService {
+export class AuthService implements OnModuleInit {
   constructor(
     private prisma: PrismaService,
     private jwtService: JwtService,
+    private configService: ConfigService,
   ) {}
+
+  // Create superadmin on app startup
+  async onModuleInit() {
+    await this.createSuperAdminFromEnv();
+  }
+
+  private async createSuperAdminFromEnv() {
+    const email = this.configService.get<string>('SUPERADMIN_EMAIL');
+    const password = this.configService.get<string>('SUPERADMIN_PASSWORD');
+
+    if (!email || !password) {
+      console.warn('⚠️  SUPERADMIN_EMAIL and SUPERADMIN_PASSWORD not set in .env');
+      return;
+    }
+
+    const existing = await this.prisma.user.findUnique({ where: { email } });
+
+    if (!existing) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      await this.prisma.user.create({
+        data: {
+          email,
+          password: hashedPassword,
+          name: 'Super Admin',
+          role: Role.SUPERADMIN,
+          provider: 'EMAIL',
+        },
+      });
+      console.log('✅ Superadmin created:', email);
+    }
+  }
 
   async validateUser(email: string, password: string) {
     const user = await this.prisma.user.findUnique({ where: { email } });
     
-    if (!user || user.provider !== 'EMAIL') {
+    if (!user || user.provider !== 'EMAIL' || !user.password) {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password || '');
+    const isPasswordValid = await bcrypt.compare(password, user.password);
     
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid credentials');
@@ -42,6 +76,7 @@ export class AuthService {
         password: hashedPassword,
         name,
         provider: 'EMAIL',
+        role: Role.USER, // Regular users are USER by default
       },
     });
 
@@ -57,12 +92,9 @@ export class AuthService {
     const { id, emails, displayName } = profile;
     const email = emails[0].value;
 
-    let user = await this.prisma.user.findUnique({
-      where: { email },
-    });
+    let user = await this.prisma.user.findUnique({ where: { email } });
 
     if (user) {
-      // Update Google ID if user exists but signed up with email
       if (!user.googleId) {
         user = await this.prisma.user.update({
           where: { id: user.id },
@@ -70,13 +102,13 @@ export class AuthService {
         });
       }
     } else {
-      // Create new user
       user = await this.prisma.user.create({
         data: {
           email,
           googleId: id,
           name: displayName,
           provider: 'GOOGLE',
+          role: Role.USER, // Google users are USER by default
         },
       });
     }
@@ -86,13 +118,18 @@ export class AuthService {
   }
 
   private generateToken(user: any) {
-    const payload = { email: user.email, sub: user.id };
+    const payload = { 
+      email: user.email, 
+      sub: user.id,
+      role: user.role, // ← Include role in JWT
+    };
     return {
       access_token: this.jwtService.sign(payload),
       user: {
         id: user.id,
         email: user.email,
         name: user.name,
+        role: user.role,
       },
     };
   }

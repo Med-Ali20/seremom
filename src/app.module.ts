@@ -10,9 +10,11 @@ import { AssessmentsResultsModule } from './modules/assessments-results/assessme
 import { JournalModule } from './modules/journal/journal.module';
 import { AssessmentCategoriesModule } from './modules/assessment-categories/assessment-categories.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { AdminModule } from './modules/admin/admin.module';
+import { ChatModule } from './modules/chat/chat.module';
 
 @Module({
-  imports: [UsersModule, ConfigModule.forRoot(), PrismaModule, CheckInsModule, AssessmentsModule, AssessmentsResultsModule, JournalModule, AssessmentCategoriesModule, AuthModule],
+  imports: [UsersModule, ConfigModule.forRoot(), PrismaModule, CheckInsModule, AssessmentsModule, AssessmentsResultsModule, JournalModule, AssessmentCategoriesModule, AuthModule, AdminModule, ChatModule],
   controllers: [AppController],
   providers: [AppService],
 })

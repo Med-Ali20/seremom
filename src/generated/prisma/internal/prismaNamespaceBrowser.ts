@@ -52,8 +52,11 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
+  ChatConversation: 'ChatConversation',
+  ChatMessage: 'ChatMessage',
   CheckIn: 'CheckIn',
   Assessment: 'Assessment',
+  AssessmentCategory: 'AssessmentCategory',
   AssessmentResult: 'AssessmentResult',
   JournalEntry: 'JournalEntry'
 } as const
@@ -79,12 +82,35 @@ export const UserScalarFieldEnum = {
   email: 'email',
   password: 'password',
   name: 'name',
+  role: 'role',
   googleId: 'googleId',
   provider: 'provider',
   createdAt: 'createdAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const ChatConversationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ChatConversationScalarFieldEnum = (typeof ChatConversationScalarFieldEnum)[keyof typeof ChatConversationScalarFieldEnum]
+
+
+export const ChatMessageScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  role: 'role',
+  content: 'content',
+  createdAt: 'createdAt'
+} as const
+
+export type ChatMessageScalarFieldEnum = (typeof ChatMessageScalarFieldEnum)[keyof typeof ChatMessageScalarFieldEnum]
 
 
 export const CheckInScalarFieldEnum = {
@@ -109,12 +135,23 @@ export const AssessmentScalarFieldEnum = {
   duration: 'duration',
   isIndividual: 'isIndividual',
   categoryId: 'categoryId',
+  questions: 'questions',
+  diagnoses: 'diagnoses',
   validated: 'validated',
   icon: 'icon',
   createdAt: 'createdAt'
 } as const
 
 export type AssessmentScalarFieldEnum = (typeof AssessmentScalarFieldEnum)[keyof typeof AssessmentScalarFieldEnum]
+
+
+export const AssessmentCategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt'
+} as const
+
+export type AssessmentCategoryScalarFieldEnum = (typeof AssessmentCategoryScalarFieldEnum)[keyof typeof AssessmentCategoryScalarFieldEnum]
 
 
 export const AssessmentResultScalarFieldEnum = {
