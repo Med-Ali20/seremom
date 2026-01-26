@@ -18,11 +18,10 @@ import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { Role } from '../auth/enums/role.enum';
 
 @Controller('admin')
-@UseGuards(JwtAuthGuard, RolesGuard) // Apply both guards
+@UseGuards(JwtAuthGuard, RolesGuard) 
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
-  // Only SUPERADMIN can create admins
   @Post('admins')
   @Roles(Role.SUPERADMIN)
   createAdmin(
@@ -31,21 +30,18 @@ export class AdminController {
     return this.adminService.createAdmin(body.email, body.password, body.name);
   }
 
-  // Both ADMIN and SUPERADMIN can view admins
   @Get('admins')
   @Roles(Role.ADMIN, Role.SUPERADMIN)
   getAllAdmins() {
     return this.adminService.getAllAdmins();
   }
 
-  // Both ADMIN and SUPERADMIN can view all users
   @Get('users')
   @Roles(Role.ADMIN, Role.SUPERADMIN)
   getAllUsers() {
     return this.adminService.getAllUsers();
   }
 
-  // Only SUPERADMIN can delete admins
   @Delete('admins/:id')
   @Roles(Role.SUPERADMIN)
   @HttpCode(HttpStatus.NO_CONTENT)
@@ -56,7 +52,6 @@ export class AdminController {
     return this.adminService.deleteAdmin(id, user.userId);
   }
 
-  // Only SUPERADMIN can update roles
   @Patch('users/:id/role')
   @Roles(Role.SUPERADMIN)
   updateUserRole(

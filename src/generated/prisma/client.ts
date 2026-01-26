@@ -77,3 +77,13 @@ export type AssessmentResult = Prisma.AssessmentResultModel
  * 
  */
 export type JournalEntry = Prisma.JournalEntryModel
+/**
+ * Model Article
+ * 
+ */
+export type Article = Prisma.ArticleModel
+/**
+ * Model Category
+ * 
+ */
+export type Category = Prisma.CategoryModel

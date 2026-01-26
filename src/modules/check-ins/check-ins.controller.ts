@@ -16,7 +16,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
 
 @Controller('check-ins')
-@UseGuards(JwtAuthGuard) // Protect ALL routes in this controller
+@UseGuards(JwtAuthGuard) 
 export class CheckInsController {
   constructor(private readonly checkInsService: CheckInsService) {}
 

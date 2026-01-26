@@ -12,9 +12,10 @@ import { AssessmentCategoriesModule } from './modules/assessment-categories/asse
 import { AuthModule } from './modules/auth/auth.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { ChatModule } from './modules/chat/chat.module';
+import { ArticlesModule } from './modules/articles/articles.module';
 
 @Module({
-  imports: [UsersModule, ConfigModule.forRoot(), PrismaModule, CheckInsModule, AssessmentsModule, AssessmentsResultsModule, JournalModule, AssessmentCategoriesModule, AuthModule, AdminModule, ChatModule],
+  imports: [UsersModule, ConfigModule.forRoot(), PrismaModule, CheckInsModule, AssessmentsModule, AssessmentsResultsModule, JournalModule, AssessmentCategoriesModule, AuthModule, AdminModule, ChatModule, ArticlesModule],
   controllers: [AppController],
   providers: [AppService],
 })

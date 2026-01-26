@@ -58,7 +58,9 @@ export const ModelName = {
   Assessment: 'Assessment',
   AssessmentCategory: 'AssessmentCategory',
   AssessmentResult: 'AssessmentResult',
-  JournalEntry: 'JournalEntry'
+  JournalEntry: 'JournalEntry',
+  Article: 'Article',
+  Category: 'Category'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -179,6 +181,29 @@ export const JournalEntryScalarFieldEnum = {
 } as const
 
 export type JournalEntryScalarFieldEnum = (typeof JournalEntryScalarFieldEnum)[keyof typeof JournalEntryScalarFieldEnum]
+
+
+export const ArticleScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  duration: 'duration',
+  content: 'content',
+  image: 'image',
+  categoryId: 'categoryId',
+  tags: 'tags',
+  date: 'date'
+} as const
+
+export type ArticleScalarFieldEnum = (typeof ArticleScalarFieldEnum)[keyof typeof ArticleScalarFieldEnum]
+
+
+export const CategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+} as const
+
+export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
 
 
 export const SortOrder = {

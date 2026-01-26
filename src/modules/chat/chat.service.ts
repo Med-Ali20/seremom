@@ -1,4 +1,3 @@
-// src/chat/chat.service.ts
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { OpenAI } from 'openai';
@@ -113,7 +112,7 @@ Remember: You're here to support, not replace, professional medical or mental he
     try {
       // Get AI response
       const completion = await this.openai.chat.completions.create({
-        model: 'gpt-4-turbo-preview', // or 'gpt-3.5-turbo' for lower cost
+        model: 'gpt-3.5-turbo', 
         messages: openAIMessages,
         temperature: 0.7,
         max_tokens: 800,

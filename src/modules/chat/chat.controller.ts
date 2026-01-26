@@ -1,4 +1,3 @@
-// src/chat/chat.controller.ts
 import {
   Controller,
   Get,
@@ -8,15 +7,15 @@ import {
   Delete,
   Patch,
   UseGuards,
-  Req,
 } from '@nestjs/common';
 import { ChatService } from './chat.service';
 import { CreateConversationDto } from './dto/create-conversation.dto';
 import { SendMessageDto } from './dto/send-message.dto';
 import { UpdateConversationDto } from './dto/update-conversation.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('chat')
-// @UseGuards(JwtAuthGuard) // Add your auth guard
+@UseGuards(JwtAuthGuard)
 export class ChatController {
   constructor(private readonly chatService: ChatService) {}
 
