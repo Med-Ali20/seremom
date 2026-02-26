@@ -21,6 +21,22 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     profile: any,
     done: VerifyCallback,
   ): Promise<any> {
-    done(null, profile);
+    try {
+      const { id, emails, displayName, photos } = profile;
+      
+      // Normalize the profile to a consistent format
+      const user = {
+        id,
+        email: emails?.[0]?.value,
+        displayName,
+        photo: photos?.[0]?.value,
+      };
+      
+      console.log('Google strategy - normalized user:', user);
+      done(null, user);
+    } catch (error) {
+      console.error('Google strategy validation error:', error);
+      done(error, false);
+    }
   }
 }

@@ -1,16 +1,27 @@
-import { Controller, Post, Body, UseGuards, Get, Req, Res } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  UseGuards,
+  Get,
+  Req,
+  Res,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
-
+  constructor(
+    private authService: AuthService,
+    private configService: ConfigService,
+  ) {}
   @Post('signup')
   async signUp(
-    @Body() body: { email: string; password: string; name?: string },
+    @Body() body: { email: string; password: string; firstname?: string, lastname?:string },
   ) {
-    return this.authService.signUp(body.email, body.password, body.name);
+    return this.authService.signUp(body.email, body.password, body.firstname, body.lastname);
   }
 
   @UseGuards(AuthGuard('local'))
@@ -28,9 +39,24 @@ export class AuthController {
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
   async googleAuthRedirect(@Req() req, @Res() res) {
-    const result = await this.authService.googleLogin(req.user);
-    
-    // Redirect to frontend with token
-    res.redirect(`${process.env.FRONTEND_URL}/auth/callback?token=${result.access_token}`);
+    try {
+      console.log('Google callback - User profile:', req.user);
+      const result = await this.authService.googleLogin(req.user);
+      console.log('Login successful, token generated');
+
+      const frontendUrl =
+        this.configService.get<string>('FRONTEND_URL') ||
+        'http://localhost:3001';
+      res.redirect(`${frontendUrl}/auth/callback?token=${result.access_token}`);
+    } catch (error) {
+      console.error('Google login error:', error);
+      console.error('Error stack:', error.stack);
+      const frontendUrl =
+        this.configService.get<string>('FRONTEND_URL') ||
+        'http://localhost:3001';
+      res.redirect(
+        `${frontendUrl}/login?error=authentication_failed&message=${error.message}`,
+      );
+    }
   }
 }

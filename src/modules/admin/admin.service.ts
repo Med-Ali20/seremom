@@ -1,4 +1,8 @@
-import { Injectable, ForbiddenException, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  ForbiddenException,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Role } from '../auth/enums/role.enum';
 import * as bcrypt from 'bcrypt';
@@ -7,21 +11,28 @@ import * as bcrypt from 'bcrypt';
 export class AdminService {
   constructor(private prisma: PrismaService) {}
 
-  async createAdmin(email: string, password: string, name?: string) {
+  async createAdmin(
+    email: string,
+    password: string,
+    firstname?: string,
+    lastname?: string,
+  ) {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     return this.prisma.user.create({
       data: {
         email,
         password: hashedPassword,
-        name,
+        firstname,
+        lastname,
         role: Role.ADMIN,
         provider: 'EMAIL',
       },
       select: {
         id: true,
         email: true,
-        name: true,
+        firstname: true,
+        lastname: true,
         role: true,
         createdAt: true,
       },
@@ -38,11 +49,28 @@ export class AdminService {
       select: {
         id: true,
         email: true,
-        name: true,
+        firstname: true,
+        lastname: true,
         role: true,
         createdAt: true,
       },
     });
+  }
+
+  async getAdminById(id: string) {
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        email: true,
+        firstname: true,
+        lastname: true,
+        role: true,
+        createdAt: true,
+      },
+    });
+    if (!user) throw new NotFoundException('Admin not found');
+    return user;
   }
 
   async getAllUsers() {
@@ -50,7 +78,8 @@ export class AdminService {
       select: {
         id: true,
         email: true,
-        name: true,
+        firstname: true,
+        lastname: true,
         role: true,
         provider: true,
         createdAt: true,
@@ -83,6 +112,38 @@ export class AdminService {
     });
   }
 
+  async updateAdmin(
+    id: string,
+    data: {
+      firstname?: string;
+      lastname?: string;
+      email?: string;
+      role?: Role;
+    },
+  ) {
+    const user = await this.prisma.user.findUnique({ where: { id } });
+    if (!user) throw new NotFoundException('Admin not found');
+    if (
+      user.role === Role.SUPERADMIN &&
+      data.role &&
+      data.role !== Role.SUPERADMIN
+    ) {
+      throw new ForbiddenException('Cannot modify superadmin role');
+    }
+
+    return this.prisma.user.update({
+      where: { id },
+      data,
+      select: {
+        id: true,
+        email: true,
+        firstname: true,
+        lastname: true,
+        role: true,
+      },
+    });
+  }
+
   async updateUserRole(userId: string, newRole: Role) {
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
 
@@ -101,7 +162,8 @@ export class AdminService {
       select: {
         id: true,
         email: true,
-        name: true,
+        firstname: true,
+        lastname: true,
         role: true,
       },
     });

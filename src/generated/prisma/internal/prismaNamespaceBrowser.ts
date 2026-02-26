@@ -52,6 +52,7 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
+  QuestionnaireAnswer: 'QuestionnaireAnswer',
   ChatConversation: 'ChatConversation',
   ChatMessage: 'ChatMessage',
   CheckIn: 'CheckIn',
@@ -83,14 +84,29 @@ export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
   password: 'password',
-  name: 'name',
+  firstname: 'firstname',
+  lastname: 'lastname',
   role: 'role',
   googleId: 'googleId',
   provider: 'provider',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  completedOnboarding: 'completedOnboarding'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const QuestionnaireAnswerScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  birthTiming: 'birthTiming',
+  healthConditions: 'healthConditions',
+  supportNeeds: 'supportNeeds',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type QuestionnaireAnswerScalarFieldEnum = (typeof QuestionnaireAnswerScalarFieldEnum)[keyof typeof QuestionnaireAnswerScalarFieldEnum]
 
 
 export const ChatConversationScalarFieldEnum = {
@@ -192,7 +208,8 @@ export const ArticleScalarFieldEnum = {
   image: 'image',
   categoryId: 'categoryId',
   tags: 'tags',
-  date: 'date'
+  date: 'date',
+  status: 'status'
 } as const
 
 export type ArticleScalarFieldEnum = (typeof ArticleScalarFieldEnum)[keyof typeof ArticleScalarFieldEnum]

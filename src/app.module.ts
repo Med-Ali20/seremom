@@ -13,9 +13,11 @@ import { AuthModule } from './modules/auth/auth.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { ChatModule } from './modules/chat/chat.module';
 import { ArticlesModule } from './modules/articles/articles.module';
+import { QuestionnaireModule } from './modules/questionnaire/questionnaire.module';
+import { UploadModule } from './modules/upload/upload.module';
 
 @Module({
-  imports: [UsersModule, ConfigModule.forRoot(), PrismaModule, CheckInsModule, AssessmentsModule, AssessmentsResultsModule, JournalModule, AssessmentCategoriesModule, AuthModule, AdminModule, ChatModule, ArticlesModule],
+  imports: [UsersModule, ConfigModule.forRoot(), PrismaModule, CheckInsModule, AssessmentsModule, AssessmentsResultsModule, JournalModule, AssessmentCategoriesModule, AuthModule, AdminModule, ChatModule, ArticlesModule, QuestionnaireModule, UploadModule],
   controllers: [AppController],
   providers: [AppService],
 })

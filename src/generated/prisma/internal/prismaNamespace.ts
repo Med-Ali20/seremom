@@ -385,6 +385,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   User: 'User',
+  QuestionnaireAnswer: 'QuestionnaireAnswer',
   ChatConversation: 'ChatConversation',
   ChatMessage: 'ChatMessage',
   CheckIn: 'CheckIn',
@@ -409,7 +410,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "chatConversation" | "chatMessage" | "checkIn" | "assessment" | "assessmentCategory" | "assessmentResult" | "journalEntry" | "article" | "category"
+    modelProps: "user" | "questionnaireAnswer" | "chatConversation" | "chatMessage" | "checkIn" | "assessment" | "assessmentCategory" | "assessmentResult" | "journalEntry" | "article" | "category"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -484,6 +485,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.UserCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.UserCountAggregateOutputType> | number
+        }
+      }
+    }
+    QuestionnaireAnswer: {
+      payload: Prisma.$QuestionnaireAnswerPayload<ExtArgs>
+      fields: Prisma.QuestionnaireAnswerFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.QuestionnaireAnswerFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionnaireAnswerPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.QuestionnaireAnswerFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionnaireAnswerPayload>
+        }
+        findFirst: {
+          args: Prisma.QuestionnaireAnswerFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionnaireAnswerPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.QuestionnaireAnswerFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionnaireAnswerPayload>
+        }
+        findMany: {
+          args: Prisma.QuestionnaireAnswerFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionnaireAnswerPayload>[]
+        }
+        create: {
+          args: Prisma.QuestionnaireAnswerCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionnaireAnswerPayload>
+        }
+        createMany: {
+          args: Prisma.QuestionnaireAnswerCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.QuestionnaireAnswerCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionnaireAnswerPayload>[]
+        }
+        delete: {
+          args: Prisma.QuestionnaireAnswerDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionnaireAnswerPayload>
+        }
+        update: {
+          args: Prisma.QuestionnaireAnswerUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionnaireAnswerPayload>
+        }
+        deleteMany: {
+          args: Prisma.QuestionnaireAnswerDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.QuestionnaireAnswerUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.QuestionnaireAnswerUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionnaireAnswerPayload>[]
+        }
+        upsert: {
+          args: Prisma.QuestionnaireAnswerUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionnaireAnswerPayload>
+        }
+        aggregate: {
+          args: Prisma.QuestionnaireAnswerAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateQuestionnaireAnswer>
+        }
+        groupBy: {
+          args: Prisma.QuestionnaireAnswerGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuestionnaireAnswerGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.QuestionnaireAnswerCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuestionnaireAnswerCountAggregateOutputType> | number
         }
       }
     }
@@ -1196,14 +1271,29 @@ export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
   password: 'password',
-  name: 'name',
+  firstname: 'firstname',
+  lastname: 'lastname',
   role: 'role',
   googleId: 'googleId',
   provider: 'provider',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  completedOnboarding: 'completedOnboarding'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const QuestionnaireAnswerScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  birthTiming: 'birthTiming',
+  healthConditions: 'healthConditions',
+  supportNeeds: 'supportNeeds',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type QuestionnaireAnswerScalarFieldEnum = (typeof QuestionnaireAnswerScalarFieldEnum)[keyof typeof QuestionnaireAnswerScalarFieldEnum]
 
 
 export const ChatConversationScalarFieldEnum = {
@@ -1305,7 +1395,8 @@ export const ArticleScalarFieldEnum = {
   image: 'image',
   categoryId: 'categoryId',
   tags: 'tags',
-  date: 'date'
+  date: 'date',
+  status: 'status'
 } as const
 
 export type ArticleScalarFieldEnum = (typeof ArticleScalarFieldEnum)[keyof typeof ArticleScalarFieldEnum]
@@ -1422,6 +1513,13 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
  * Reference to a field of type 'MessageRole'
  */
 export type EnumMessageRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MessageRole'>
@@ -1446,13 +1544,6 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-/**
- * Reference to a field of type 'Boolean'
- */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -1579,6 +1670,7 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
+  questionnaireAnswer?: Prisma.QuestionnaireAnswerOmit
   chatConversation?: Prisma.ChatConversationOmit
   chatMessage?: Prisma.ChatMessageOmit
   checkIn?: Prisma.CheckInOmit

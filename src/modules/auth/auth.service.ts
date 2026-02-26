@@ -1,4 +1,9 @@
-import { Injectable, UnauthorizedException, ConflictException, OnModuleInit } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+  ConflictException,
+  OnModuleInit,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '../prisma/prisma.service';
@@ -13,7 +18,6 @@ export class AuthService implements OnModuleInit {
     private configService: ConfigService,
   ) {}
 
-  // Create superadmin on app startup
   async onModuleInit() {
     await this.createSuperAdminFromEnv();
   }
@@ -35,7 +39,7 @@ export class AuthService implements OnModuleInit {
         data: {
           email,
           password: hashedPassword,
-          name: 'Super Admin',
+          firstname: 'Sabina',
           role: Role.SUPERADMIN,
           provider: 'EMAIL',
         },
@@ -46,13 +50,13 @@ export class AuthService implements OnModuleInit {
 
   async validateUser(email: string, password: string) {
     const user = await this.prisma.user.findUnique({ where: { email } });
-    
+
     if (!user || user.provider !== 'EMAIL' || !user.password) {
       throw new UnauthorizedException('Invalid credentials');
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
-    
+
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid credentials');
     }
@@ -61,9 +65,14 @@ export class AuthService implements OnModuleInit {
     return result;
   }
 
-  async signUp(email: string, password: string, name?: string) {
+  async signUp(
+    email: string,
+    password: string,
+    firstname?: string,
+    lastname?: string,
+  ) {
     const existingUser = await this.prisma.user.findUnique({ where: { email } });
-    
+
     if (existingUser) {
       throw new ConflictException('Email already exists');
     }
@@ -74,9 +83,10 @@ export class AuthService implements OnModuleInit {
       data: {
         email,
         password: hashedPassword,
-        name,
+        firstname,
+        lastname,
         provider: 'EMAIL',
-        role: Role.USER, // Regular users are USER by default
+        role: Role.USER,
       },
     });
 
@@ -89,47 +99,57 @@ export class AuthService implements OnModuleInit {
   }
 
   async googleLogin(profile: any) {
-    const { id, emails, displayName } = profile;
-    const email = emails[0].value;
+    try {
+      const { id, email, displayName } = profile;
 
-    let user = await this.prisma.user.findUnique({ where: { email } });
+      if (!email) throw new Error('No email provided by Google');
 
-    if (user) {
-      if (!user.googleId) {
-        user = await this.prisma.user.update({
-          where: { id: user.id },
-          data: { googleId: id, provider: 'GOOGLE' },
+      let user = await this.prisma.user.findUnique({ where: { email } });
+
+      if (user) {
+        if (!user.googleId) {
+          user = await this.prisma.user.update({
+            where: { id: user.id },
+            data: { googleId: id, provider: 'GOOGLE' },
+          });
+        }
+      } else {
+        user = await this.prisma.user.create({
+          data: {
+            email,
+            googleId: id,
+            firstname: displayName.split(' ')[0],
+            lastname: displayName.split(' ')[1],
+            provider: 'GOOGLE',
+            role: Role.USER,
+          },
         });
       }
-    } else {
-      user = await this.prisma.user.create({
-        data: {
-          email,
-          googleId: id,
-          name: displayName,
-          provider: 'GOOGLE',
-          role: Role.USER, // Google users are USER by default
-        },
-      });
-    }
 
-    const { password: _, ...result } = user;
-    return this.generateToken(result);
+      const { password: _, ...result } = user;
+      return this.generateToken(result);
+    } catch (error) {
+      console.error('Error in googleLogin:', error);
+      throw error;
+    }
   }
 
   private generateToken(user: any) {
-    const payload = { 
-      email: user.email, 
+    const payload = {
+      email: user.email,
       sub: user.id,
-      role: user.role, // ← Include role in JWT
+      role: user.role,
+      completedOnboarding: user.completedOnboarding ?? false, // ← middleware reads this
     };
     return {
       access_token: this.jwtService.sign(payload),
       user: {
         id: user.id,
         email: user.email,
-        name: user.name,
+        firstname: user.firstname,
+        lastname: user.lastname,
         role: user.role,
+        completedOnboarding: user.completedOnboarding, // ← added
       },
     };
   }

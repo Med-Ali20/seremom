@@ -18,22 +18,39 @@ import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { Role } from '../auth/enums/role.enum';
 
 @Controller('admin')
-@UseGuards(JwtAuthGuard, RolesGuard) 
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
   @Post('admins')
   @Roles(Role.SUPERADMIN)
   createAdmin(
-    @Body() body: { email: string; password: string; name?: string },
+    @Body()
+    body: {
+      email: string;
+      password: string;
+      firstname?: string;
+      lastname?: string;
+    },
   ) {
-    return this.adminService.createAdmin(body.email, body.password, body.name);
+    return this.adminService.createAdmin(
+      body.email,
+      body.password,
+      body.firstname,
+      body.lastname,
+    );
   }
 
   @Get('admins')
-  @Roles(Role.ADMIN, Role.SUPERADMIN)
+  @Roles(Role.SUPERADMIN)
   getAllAdmins() {
     return this.adminService.getAllAdmins();
+  }
+
+  @Get('admins/:id')
+  @Roles(Role.SUPERADMIN)
+  getAdminById(@Param('id') id: string) {
+    return this.adminService.getAdminById(id);
   }
 
   @Get('users')
@@ -54,10 +71,22 @@ export class AdminController {
 
   @Patch('users/:id/role')
   @Roles(Role.SUPERADMIN)
-  updateUserRole(
-    @Param('id') id: string,
-    @Body() body: { role: Role },
-  ) {
+  updateUserRole(@Param('id') id: string, @Body() body: { role: Role }) {
     return this.adminService.updateUserRole(id, body.role);
+  }
+
+  @Patch('admins/:id')
+  @Roles(Role.SUPERADMIN)
+  updateAdmin(
+    @Param('id') id: string,
+    @Body()
+    body: {
+      firstname?: string;
+      lastname?: string;
+      email?: string;
+      role?: Role;
+    },
+  ) {
+    return this.adminService.updateAdmin(id, body);
   }
 }

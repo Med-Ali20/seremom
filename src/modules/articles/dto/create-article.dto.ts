@@ -1,37 +1,45 @@
-// dto/create-article.dto.ts
+
 import {
   IsString,
   IsOptional,
   IsArray,
   IsDateString,
-  IsUUID,
+  IsNotEmpty,
 } from 'class-validator';
 
 export class CreateArticleDto {
   @IsString()
+  @IsNotEmpty()
   title: string;
 
   @IsString()
+  @IsNotEmpty()
   description: string;
 
   @IsString()
+  @IsNotEmpty()
   duration: string;
 
   @IsString()
+  @IsNotEmpty()
   content: string;
 
   @IsString()
-  image: string;
+  @IsNotEmpty()
+  image: string; // URL returned from /upload/image
 
-  @IsUUID()
   @IsOptional()
+  @IsString()
   categoryId?: string;
 
+  @IsOptional()
   @IsArray()
   @IsString({ each: true })
-  @IsOptional()
   tags?: string[];
 
   @IsDateString()
   date: string;
+
+  @IsOptional()
+  status: string;
 }

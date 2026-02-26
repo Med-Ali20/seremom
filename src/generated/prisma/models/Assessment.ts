@@ -481,10 +481,6 @@ export type AssessmentOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type AssessmentCreateNestedManyWithoutCategoryInput = {
   create?: Prisma.XOR<Prisma.AssessmentCreateWithoutCategoryInput, Prisma.AssessmentUncheckedCreateWithoutCategoryInput> | Prisma.AssessmentCreateWithoutCategoryInput[] | Prisma.AssessmentUncheckedCreateWithoutCategoryInput[]
   connectOrCreate?: Prisma.AssessmentCreateOrConnectWithoutCategoryInput | Prisma.AssessmentCreateOrConnectWithoutCategoryInput[]

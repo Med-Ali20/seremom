@@ -33,6 +33,7 @@ export type ArticleMinAggregateOutputType = {
   image: string | null
   categoryId: string | null
   date: Date | null
+  status: string | null
 }
 
 export type ArticleMaxAggregateOutputType = {
@@ -44,6 +45,7 @@ export type ArticleMaxAggregateOutputType = {
   image: string | null
   categoryId: string | null
   date: Date | null
+  status: string | null
 }
 
 export type ArticleCountAggregateOutputType = {
@@ -56,6 +58,7 @@ export type ArticleCountAggregateOutputType = {
   categoryId: number
   tags: number
   date: number
+  status: number
   _all: number
 }
 
@@ -69,6 +72,7 @@ export type ArticleMinAggregateInputType = {
   image?: true
   categoryId?: true
   date?: true
+  status?: true
 }
 
 export type ArticleMaxAggregateInputType = {
@@ -80,6 +84,7 @@ export type ArticleMaxAggregateInputType = {
   image?: true
   categoryId?: true
   date?: true
+  status?: true
 }
 
 export type ArticleCountAggregateInputType = {
@@ -92,6 +97,7 @@ export type ArticleCountAggregateInputType = {
   categoryId?: true
   tags?: true
   date?: true
+  status?: true
   _all?: true
 }
 
@@ -177,6 +183,7 @@ export type ArticleGroupByOutputType = {
   categoryId: string | null
   tags: string[]
   date: Date
+  status: string
   _count: ArticleCountAggregateOutputType | null
   _min: ArticleMinAggregateOutputType | null
   _max: ArticleMaxAggregateOutputType | null
@@ -210,6 +217,7 @@ export type ArticleWhereInput = {
   categoryId?: Prisma.StringNullableFilter<"Article"> | string | null
   tags?: Prisma.StringNullableListFilter<"Article">
   date?: Prisma.DateTimeFilter<"Article"> | Date | string
+  status?: Prisma.StringFilter<"Article"> | string
   category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
 }
 
@@ -223,6 +231,7 @@ export type ArticleOrderByWithRelationInput = {
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   tags?: Prisma.SortOrder
   date?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   category?: Prisma.CategoryOrderByWithRelationInput
 }
 
@@ -239,6 +248,7 @@ export type ArticleWhereUniqueInput = Prisma.AtLeast<{
   categoryId?: Prisma.StringNullableFilter<"Article"> | string | null
   tags?: Prisma.StringNullableListFilter<"Article">
   date?: Prisma.DateTimeFilter<"Article"> | Date | string
+  status?: Prisma.StringFilter<"Article"> | string
   category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
 }, "id">
 
@@ -252,6 +262,7 @@ export type ArticleOrderByWithAggregationInput = {
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   tags?: Prisma.SortOrder
   date?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   _count?: Prisma.ArticleCountOrderByAggregateInput
   _max?: Prisma.ArticleMaxOrderByAggregateInput
   _min?: Prisma.ArticleMinOrderByAggregateInput
@@ -270,6 +281,7 @@ export type ArticleScalarWhereWithAggregatesInput = {
   categoryId?: Prisma.StringNullableWithAggregatesFilter<"Article"> | string | null
   tags?: Prisma.StringNullableListFilter<"Article">
   date?: Prisma.DateTimeWithAggregatesFilter<"Article"> | Date | string
+  status?: Prisma.StringWithAggregatesFilter<"Article"> | string
 }
 
 export type ArticleCreateInput = {
@@ -281,6 +293,7 @@ export type ArticleCreateInput = {
   image: string
   tags?: Prisma.ArticleCreatetagsInput | string[]
   date: Date | string
+  status?: string
   category?: Prisma.CategoryCreateNestedOneWithoutArticlesInput
 }
 
@@ -294,6 +307,7 @@ export type ArticleUncheckedCreateInput = {
   categoryId?: string | null
   tags?: Prisma.ArticleCreatetagsInput | string[]
   date: Date | string
+  status?: string
 }
 
 export type ArticleUpdateInput = {
@@ -305,6 +319,7 @@ export type ArticleUpdateInput = {
   image?: Prisma.StringFieldUpdateOperationsInput | string
   tags?: Prisma.ArticleUpdatetagsInput | string[]
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.CategoryUpdateOneWithoutArticlesNestedInput
 }
 
@@ -318,6 +333,7 @@ export type ArticleUncheckedUpdateInput = {
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.ArticleUpdatetagsInput | string[]
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ArticleCreateManyInput = {
@@ -330,6 +346,7 @@ export type ArticleCreateManyInput = {
   categoryId?: string | null
   tags?: Prisma.ArticleCreatetagsInput | string[]
   date: Date | string
+  status?: string
 }
 
 export type ArticleUpdateManyMutationInput = {
@@ -341,6 +358,7 @@ export type ArticleUpdateManyMutationInput = {
   image?: Prisma.StringFieldUpdateOperationsInput | string
   tags?: Prisma.ArticleUpdatetagsInput | string[]
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ArticleUncheckedUpdateManyInput = {
@@ -353,14 +371,7 @@ export type ArticleUncheckedUpdateManyInput = {
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.ArticleUpdatetagsInput | string[]
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type StringNullableListFilter<$PrismaModel = never> = {
-  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
-  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
-  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
-  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
-  isEmpty?: boolean
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ArticleCountOrderByAggregateInput = {
@@ -373,6 +384,7 @@ export type ArticleCountOrderByAggregateInput = {
   categoryId?: Prisma.SortOrder
   tags?: Prisma.SortOrder
   date?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type ArticleMaxOrderByAggregateInput = {
@@ -384,6 +396,7 @@ export type ArticleMaxOrderByAggregateInput = {
   image?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
   date?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type ArticleMinOrderByAggregateInput = {
@@ -395,6 +408,7 @@ export type ArticleMinOrderByAggregateInput = {
   image?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
   date?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type ArticleListRelationFilter = {
@@ -467,6 +481,7 @@ export type ArticleCreateWithoutCategoryInput = {
   image: string
   tags?: Prisma.ArticleCreatetagsInput | string[]
   date: Date | string
+  status?: string
 }
 
 export type ArticleUncheckedCreateWithoutCategoryInput = {
@@ -478,6 +493,7 @@ export type ArticleUncheckedCreateWithoutCategoryInput = {
   image: string
   tags?: Prisma.ArticleCreatetagsInput | string[]
   date: Date | string
+  status?: string
 }
 
 export type ArticleCreateOrConnectWithoutCategoryInput = {
@@ -519,6 +535,7 @@ export type ArticleScalarWhereInput = {
   categoryId?: Prisma.StringNullableFilter<"Article"> | string | null
   tags?: Prisma.StringNullableListFilter<"Article">
   date?: Prisma.DateTimeFilter<"Article"> | Date | string
+  status?: Prisma.StringFilter<"Article"> | string
 }
 
 export type ArticleCreateManyCategoryInput = {
@@ -530,6 +547,7 @@ export type ArticleCreateManyCategoryInput = {
   image: string
   tags?: Prisma.ArticleCreatetagsInput | string[]
   date: Date | string
+  status?: string
 }
 
 export type ArticleUpdateWithoutCategoryInput = {
@@ -541,6 +559,7 @@ export type ArticleUpdateWithoutCategoryInput = {
   image?: Prisma.StringFieldUpdateOperationsInput | string
   tags?: Prisma.ArticleUpdatetagsInput | string[]
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ArticleUncheckedUpdateWithoutCategoryInput = {
@@ -552,6 +571,7 @@ export type ArticleUncheckedUpdateWithoutCategoryInput = {
   image?: Prisma.StringFieldUpdateOperationsInput | string
   tags?: Prisma.ArticleUpdatetagsInput | string[]
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ArticleUncheckedUpdateManyWithoutCategoryInput = {
@@ -563,6 +583,7 @@ export type ArticleUncheckedUpdateManyWithoutCategoryInput = {
   image?: Prisma.StringFieldUpdateOperationsInput | string
   tags?: Prisma.ArticleUpdatetagsInput | string[]
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -577,6 +598,7 @@ export type ArticleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   categoryId?: boolean
   tags?: boolean
   date?: boolean
+  status?: boolean
   category?: boolean | Prisma.Article$categoryArgs<ExtArgs>
 }, ExtArgs["result"]["article"]>
 
@@ -590,6 +612,7 @@ export type ArticleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   categoryId?: boolean
   tags?: boolean
   date?: boolean
+  status?: boolean
   category?: boolean | Prisma.Article$categoryArgs<ExtArgs>
 }, ExtArgs["result"]["article"]>
 
@@ -603,6 +626,7 @@ export type ArticleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   categoryId?: boolean
   tags?: boolean
   date?: boolean
+  status?: boolean
   category?: boolean | Prisma.Article$categoryArgs<ExtArgs>
 }, ExtArgs["result"]["article"]>
 
@@ -616,9 +640,10 @@ export type ArticleSelectScalar = {
   categoryId?: boolean
   tags?: boolean
   date?: boolean
+  status?: boolean
 }
 
-export type ArticleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "duration" | "content" | "image" | "categoryId" | "tags" | "date", ExtArgs["result"]["article"]>
+export type ArticleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "duration" | "content" | "image" | "categoryId" | "tags" | "date" | "status", ExtArgs["result"]["article"]>
 export type ArticleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.Article$categoryArgs<ExtArgs>
 }
@@ -644,6 +669,7 @@ export type $ArticlePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     categoryId: string | null
     tags: string[]
     date: Date
+    status: string
   }, ExtArgs["result"]["article"]>
   composites: {}
 }
@@ -1077,6 +1103,7 @@ export interface ArticleFieldRefs {
   readonly categoryId: Prisma.FieldRef<"Article", 'String'>
   readonly tags: Prisma.FieldRef<"Article", 'String[]'>
   readonly date: Prisma.FieldRef<"Article", 'DateTime'>
+  readonly status: Prisma.FieldRef<"Article", 'String'>
 }
     
 

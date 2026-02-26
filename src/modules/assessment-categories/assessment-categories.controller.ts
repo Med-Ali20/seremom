@@ -1,34 +1,31 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { AssessmentCategoriesService } from './assessment-categories.service';
-import { CreateAssessmentCategoryDto } from './dto/create-assessment-category.dto';
-import { UpdateAssessmentCategoryDto } from './dto/update-assessment-category.dto';
+// assessment-categories.controller.ts
+import { Controller, Get, Post, Body, Delete, Param, UseGuards } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { Role } from '../auth/enums/role.enum';
 
 @Controller('assessment-categories')
 export class AssessmentCategoriesController {
-  constructor(private readonly assessmentCategoriesService: AssessmentCategoriesService) {}
-
-  @Post()
-  create(@Body() createAssessmentCategoryDto: CreateAssessmentCategoryDto) {
-    return this.assessmentCategoriesService.create(createAssessmentCategoryDto);
-  }
+  constructor(private readonly prisma: PrismaService) {}
 
   @Get()
   findAll() {
-    return this.assessmentCategoriesService.findAll();
+    return this.prisma.assessmentCategory.findMany({ orderBy: { name: 'asc' } });
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.assessmentCategoriesService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAssessmentCategoryDto: UpdateAssessmentCategoryDto) {
-    return this.assessmentCategoriesService.update(+id, updateAssessmentCategoryDto);
+  @Post()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN, Role.SUPERADMIN)
+  create(@Body() body: { name: string }) {
+    return this.prisma.assessmentCategory.create({ data: { name: body.name } });
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN, Role.SUPERADMIN)
   remove(@Param('id') id: string) {
-    return this.assessmentCategoriesService.remove(+id);
+    return this.prisma.assessmentCategory.delete({ where: { id } });
   }
 }

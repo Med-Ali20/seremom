@@ -21,26 +21,39 @@ enum Role {
 }
 
 model User {
-  id                String             @id @default(uuid())
-  email             String             @unique
-  password          String?
-  name              String?
-  role              Role               @default(USER)
-  googleId          String?            @unique
-  provider          AuthProvider       @default(EMAIL)
-  createdAt         DateTime           @default(now())
-  checkIns          CheckIn[]
-  journalEntries    JournalEntry[]
-  assessmentResults AssessmentResult[]
-  chatConversations ChatConversation[]
-  completedOnboarding Boolean          @default(false)
+  id                   String               @id @default(uuid())
+  email                String               @unique
+  password             String?
+  firstname            String?
+  lastname             String?
+  role                 Role                 @default(USER)
+  googleId             String?              @unique
+  provider             AuthProvider         @default(EMAIL)
+  createdAt            DateTime             @default(now())
+  checkIns             CheckIn[]
+  journalEntries       JournalEntry[]
+  assessmentResults    AssessmentResult[]
+  chatConversations    ChatConversation[]
+  completedOnboarding  Boolean              @default(false)
+  questionnaireAnswers QuestionnaireAnswer?
+}
+
+model QuestionnaireAnswer {
+  id               String   @id @default(uuid())
+  userId           String   @unique
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  birthTiming      String[]
+  healthConditions String[]
+  supportNeeds     String[]
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 }
 
 model ChatConversation {
   id        String        @id @default(uuid())
   userId    String
   user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  title     String? 
+  title     String?
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
   messages  ChatMessage[]
@@ -126,23 +139,23 @@ model JournalEntry {
 }
 
 model Article {
-  id    String @id @default(uuid())
-  title String 
+  id          String    @id @default(uuid())
+  title       String
   description String
-  duration String
-  content String
-  image String
-  category Category? @relation(fields: [categoryId], references: [id])
-  categoryId String?
-  tags String[]
-  date DateTime
+  duration    String
+  content     String
+  image       String
+  category    Category? @relation(fields: [categoryId], references: [id])
+  categoryId  String?
+  tags        String[]
+  date        DateTime
+  status      String @default("published")
 }
 
-
 model Category {
-  id String @id @default(uuid())
+  id       String    @id @default(uuid())
   Articles Article[]
-  name String
+  name     String
 }
 
 enum AuthProvider {
