@@ -1,26 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { CreateAssessmentCategoryDto } from './dto/create-assessment-category.dto';
-import { UpdateAssessmentCategoryDto } from './dto/update-assessment-category.dto';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class AssessmentCategoriesService {
-  create(createAssessmentCategoryDto: CreateAssessmentCategoryDto) {
-    return 'This action adds a new assessmentCategory';
-  }
+  constructor(private readonly prisma: PrismaService) {}
 
   findAll() {
-    return `This action returns all assessmentCategories`;
+    return this.prisma.assessmentCategory.findMany({ orderBy: { name: 'asc' } });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} assessmentCategory`;
+  create(name: string) {
+    return this.prisma.assessmentCategory.create({ data: { name } });
   }
 
-  update(id: number, updateAssessmentCategoryDto: UpdateAssessmentCategoryDto) {
-    return `This action updates a #${id} assessmentCategory`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} assessmentCategory`;
+  remove(id: string) {
+    return this.prisma.assessmentCategory.delete({ where: { id } });
   }
 }

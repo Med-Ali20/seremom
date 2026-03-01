@@ -88,7 +88,7 @@ export type JournalEntry = Prisma.JournalEntryModel
  */
 export type Article = Prisma.ArticleModel
 /**
- * Model Category
+ * Model ArticleCategory
  * 
  */
-export type Category = Prisma.CategoryModel
+export type ArticleCategory = Prisma.ArticleCategoryModel

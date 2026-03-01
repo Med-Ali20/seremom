@@ -61,7 +61,7 @@ export const ModelName = {
   AssessmentResult: 'AssessmentResult',
   JournalEntry: 'JournalEntry',
   Article: 'Article',
-  Category: 'Category'
+  ArticleCategory: 'ArticleCategory'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -215,12 +215,13 @@ export const ArticleScalarFieldEnum = {
 export type ArticleScalarFieldEnum = (typeof ArticleScalarFieldEnum)[keyof typeof ArticleScalarFieldEnum]
 
 
-export const CategoryScalarFieldEnum = {
+export const ArticleCategoryScalarFieldEnum = {
   id: 'id',
-  name: 'name'
+  name: 'name',
+  createdAt: 'createdAt'
 } as const
 
-export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
+export type ArticleCategoryScalarFieldEnum = (typeof ArticleCategoryScalarFieldEnum)[keyof typeof ArticleCategoryScalarFieldEnum]
 
 
 export const SortOrder = {

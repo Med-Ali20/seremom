@@ -27,7 +27,9 @@ export class AuthService implements OnModuleInit {
     const password = this.configService.get<string>('SUPERADMIN_PASSWORD');
 
     if (!email || !password) {
-      console.warn('⚠️  SUPERADMIN_EMAIL and SUPERADMIN_PASSWORD not set in .env');
+      console.warn(
+        '⚠️  SUPERADMIN_EMAIL and SUPERADMIN_PASSWORD not set in .env',
+      );
       return;
     }
 
@@ -71,7 +73,9 @@ export class AuthService implements OnModuleInit {
     firstname?: string,
     lastname?: string,
   ) {
-    const existingUser = await this.prisma.user.findUnique({ where: { email } });
+    const existingUser = await this.prisma.user.findUnique({
+      where: { email },
+    });
 
     if (existingUser) {
       throw new ConflictException('Email already exists');
@@ -133,13 +137,14 @@ export class AuthService implements OnModuleInit {
       throw error;
     }
   }
-
   private generateToken(user: any) {
     const payload = {
       email: user.email,
       sub: user.id,
       role: user.role,
-      completedOnboarding: user.completedOnboarding ?? false, // ← middleware reads this
+      firstname: user.firstname, // ← add
+      lastname: user.lastname, // ← add
+      completedOnboarding: user.completedOnboarding ?? false,
     };
     return {
       access_token: this.jwtService.sign(payload),
@@ -149,7 +154,7 @@ export class AuthService implements OnModuleInit {
         firstname: user.firstname,
         lastname: user.lastname,
         role: user.role,
-        completedOnboarding: user.completedOnboarding, // ← added
+        completedOnboarding: user.completedOnboarding,
       },
     };
   }

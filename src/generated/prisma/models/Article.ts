@@ -218,7 +218,7 @@ export type ArticleWhereInput = {
   tags?: Prisma.StringNullableListFilter<"Article">
   date?: Prisma.DateTimeFilter<"Article"> | Date | string
   status?: Prisma.StringFilter<"Article"> | string
-  category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
+  category?: Prisma.XOR<Prisma.ArticleCategoryNullableScalarRelationFilter, Prisma.ArticleCategoryWhereInput> | null
 }
 
 export type ArticleOrderByWithRelationInput = {
@@ -232,7 +232,7 @@ export type ArticleOrderByWithRelationInput = {
   tags?: Prisma.SortOrder
   date?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  category?: Prisma.CategoryOrderByWithRelationInput
+  category?: Prisma.ArticleCategoryOrderByWithRelationInput
 }
 
 export type ArticleWhereUniqueInput = Prisma.AtLeast<{
@@ -249,7 +249,7 @@ export type ArticleWhereUniqueInput = Prisma.AtLeast<{
   tags?: Prisma.StringNullableListFilter<"Article">
   date?: Prisma.DateTimeFilter<"Article"> | Date | string
   status?: Prisma.StringFilter<"Article"> | string
-  category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
+  category?: Prisma.XOR<Prisma.ArticleCategoryNullableScalarRelationFilter, Prisma.ArticleCategoryWhereInput> | null
 }, "id">
 
 export type ArticleOrderByWithAggregationInput = {
@@ -294,7 +294,7 @@ export type ArticleCreateInput = {
   tags?: Prisma.ArticleCreatetagsInput | string[]
   date: Date | string
   status?: string
-  category?: Prisma.CategoryCreateNestedOneWithoutArticlesInput
+  category?: Prisma.ArticleCategoryCreateNestedOneWithoutArticlesInput
 }
 
 export type ArticleUncheckedCreateInput = {
@@ -320,7 +320,7 @@ export type ArticleUpdateInput = {
   tags?: Prisma.ArticleUpdatetagsInput | string[]
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  category?: Prisma.CategoryUpdateOneWithoutArticlesNestedInput
+  category?: Prisma.ArticleCategoryUpdateOneWithoutArticlesNestedInput
 }
 
 export type ArticleUncheckedUpdateInput = {
@@ -657,7 +657,7 @@ export type ArticleIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
 export type $ArticlePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Article"
   objects: {
-    category: Prisma.$CategoryPayload<ExtArgs> | null
+    category: Prisma.$ArticleCategoryPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1064,7 +1064,7 @@ readonly fields: ArticleFieldRefs;
  */
 export interface Prisma__ArticleClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  category<T extends Prisma.Article$categoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Article$categoryArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  category<T extends Prisma.Article$categoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Article$categoryArgs<ExtArgs>>): Prisma.Prisma__ArticleCategoryClient<runtime.Types.Result.GetResult<Prisma.$ArticleCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1504,18 +1504,18 @@ export type ArticleDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
  */
 export type Article$categoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Category
+   * Select specific fields to fetch from the ArticleCategory
    */
-  select?: Prisma.CategorySelect<ExtArgs> | null
+  select?: Prisma.ArticleCategorySelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Category
+   * Omit specific fields from the ArticleCategory
    */
-  omit?: Prisma.CategoryOmit<ExtArgs> | null
+  omit?: Prisma.ArticleCategoryOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.CategoryInclude<ExtArgs> | null
-  where?: Prisma.CategoryWhereInput
+  include?: Prisma.ArticleCategoryInclude<ExtArgs> | null
+  where?: Prisma.ArticleCategoryWhereInput
 }
 
 /**

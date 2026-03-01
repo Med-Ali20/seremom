@@ -139,23 +139,24 @@ model JournalEntry {
 }
 
 model Article {
-  id          String    @id @default(uuid())
+  id          String           @id @default(uuid())
   title       String
   description String
   duration    String
   content     String
   image       String
-  category    Category? @relation(fields: [categoryId], references: [id])
+  category    ArticleCategory? @relation(fields: [categoryId], references: [id])
   categoryId  String?
   tags        String[]
   date        DateTime
-  status      String @default("published")
+  status      String           @default("published")
 }
 
-model Category {
-  id       String    @id @default(uuid())
-  Articles Article[]
-  name     String
+model ArticleCategory {
+  id        String    @id @default(uuid())
+  name      String    @unique
+  createdAt DateTime  @default(now())
+  articles  Article[]
 }
 
 enum AuthProvider {

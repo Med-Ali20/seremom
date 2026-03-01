@@ -31,6 +31,7 @@ export class ArticlesService {
     search?: string;
     categoryId?: string;
     tags?: string[];
+    include: { category: true }
   }) {
     const where: any = {};
 
@@ -97,10 +98,10 @@ export class ArticlesService {
               connect: { id: categoryId },
             }
           : categoryId === null
-          ? {
-              disconnect: true,
-            }
-          : undefined,
+            ? {
+                disconnect: true,
+              }
+            : undefined,
       },
       include: {
         category: true,
@@ -240,5 +241,17 @@ export class ArticlesService {
     const uniqueTags = [...new Set(allTags)];
 
     return uniqueTags.sort();
+  }
+
+  async getCategories() {
+    return this.prisma.articleCategory.findMany({ orderBy: { name: 'asc' } });
+  }
+
+  async createCategory(name: string) {
+    return this.prisma.articleCategory.create({ data: { name } });
+  }
+
+  async deleteCategory(id: string) {
+    return this.prisma.articleCategory.delete({ where: { id } });
   }
 }

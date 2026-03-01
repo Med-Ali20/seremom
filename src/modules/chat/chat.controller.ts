@@ -1,3 +1,4 @@
+// chat.controller.ts
 import {
   Controller,
   Get,
@@ -5,11 +6,12 @@ import {
   Body,
   Param,
   Delete,
+  Res,
   Patch,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { ChatService } from './chat.service';
-import { CreateConversationDto } from './dto/create-conversation.dto';
 import { SendMessageDto } from './dto/send-message.dto';
 import { UpdateConversationDto } from './dto/update-conversation.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -20,50 +22,69 @@ export class ChatController {
   constructor(private readonly chatService: ChatService) {}
 
   @Post('conversations')
-  createConversation(@Body() createConversationDto: CreateConversationDto) {
-    return this.chatService.createConversation(createConversationDto);
+  createConversation(@Req() req: any) {
+    return this.chatService.createConversation(req.user.userId);
   }
 
-  @Get('conversations/user/:userId')
-  getUserConversations(@Param('userId') userId: string) {
-    return this.chatService.getUserConversations(userId);
+  @Get('conversations')
+  getUserConversations(@Req() req: any) {
+    return this.chatService.getUserConversations(req.user.userId);
   }
 
-  @Get('conversations/:conversationId/user/:userId')
+  @Get('conversations/:conversationId')
   getConversation(
     @Param('conversationId') conversationId: string,
-    @Param('userId') userId: string,
+    @Req() req: any,
   ) {
-    return this.chatService.getConversation(conversationId, userId);
+    return this.chatService.getConversation(conversationId, req.user.userId);
   }
 
-  @Post('conversations/:conversationId/messages/user/:userId')
-  sendMessage(
+  @Post('conversations/:conversationId/messages')
+  async sendMessage(
     @Param('conversationId') conversationId: string,
-    @Param('userId') userId: string,
+    @Req() req: any,
     @Body() sendMessageDto: SendMessageDto,
+    @Res() res: Response,
   ) {
-    return this.chatService.sendMessage(conversationId, userId, sendMessageDto);
+    await this.chatService.sendMessage(
+      conversationId,
+      req.user.userId,
+      sendMessageDto,
+      res,
+    );
   }
 
-  @Patch('conversations/:conversationId/user/:userId')
+  @Patch('conversations/:conversationId')
   updateConversation(
     @Param('conversationId') conversationId: string,
-    @Param('userId') userId: string,
+    @Req() req: any,
     @Body() updateConversationDto: UpdateConversationDto,
   ) {
     return this.chatService.updateConversation(
       conversationId,
-      userId,
+      req.user.userId,
       updateConversationDto,
     );
   }
 
-  @Delete('conversations/:conversationId/user/:userId')
+  @Delete('conversations/:conversationId')
   deleteConversation(
     @Param('conversationId') conversationId: string,
-    @Param('userId') userId: string,
+    @Req() req: any,
   ) {
-    return this.chatService.deleteConversation(conversationId, userId);
+    return this.chatService.deleteConversation(conversationId, req.user.userId);
+  }
+
+  @Get('messages/count')
+  getUserMessageCount(@Req() req: any) {
+    const since = new Date(Date.now() - 4 * 60 * 60 * 1000);
+    return this.chatService
+      .getUserMessageCount(req.user.userId, since)
+      .then((count) => ({
+        count,
+        remaining: Math.max(0, 15 - count),
+        limit: 15,
+        resetsAt: since.getTime() + 4 * 60 * 60 * 1000, // when the oldest msg in window ages out
+      }));
   }
 }

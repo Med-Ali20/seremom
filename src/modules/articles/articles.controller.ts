@@ -34,6 +34,7 @@ export class ArticlesController {
       search,
       categoryId,
       tags: tags ? tags.split(',') : undefined,
+      include: { category: true }
     });
   }
 
@@ -71,6 +72,25 @@ export class ArticlesController {
   @Get('tag/:tag')
   findByTag(@Param('tag') tag: string) {
     return this.articlesService.findByTag(tag);
+  }
+
+  @Get('categories')
+  getCategories() {
+    return this.articlesService.getCategories();
+  }
+
+  @Post('categories')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN, Role.SUPERADMIN)
+  createCategory(@Body() body: { name: string }) {
+    return this.articlesService.createCategory(body.name);
+  }
+
+  @Delete('categories/:id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN, Role.SUPERADMIN)
+  deleteCategory(@Param('id') id: string) {
+    return this.articlesService.deleteCategory(id);
   }
 
   @Get(':id')
