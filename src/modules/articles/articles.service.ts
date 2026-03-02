@@ -3,6 +3,10 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { PrismaService } from '../prisma/prisma.service';
+import {
+  sanitizeSearch,
+  sanitizePagination,
+} from '../../common/utils/sanitize-search';
 
 @Injectable()
 export class ArticlesService {
@@ -31,17 +35,18 @@ export class ArticlesService {
     search?: string;
     categoryId?: string;
     tags?: string[];
-    include: { category: true }
+    include: { category: true };
   }) {
     const where: any = {};
 
-    // Search by title, description, or content
     if (query?.search) {
-      where.OR = [
-        { title: { contains: query.search, mode: 'insensitive' } },
-        { description: { contains: query.search, mode: 'insensitive' } },
-        { content: { contains: query.search, mode: 'insensitive' } },
-      ];
+      const q = sanitizeSearch(query.search);
+      if (q) {
+        where.OR = [
+          { title: { contains: q, mode: 'insensitive' } },
+          { description: { contains: q, mode: 'insensitive' } },
+        ];
+      }
     }
 
     // Filter by category
@@ -119,8 +124,6 @@ export class ArticlesService {
 
     return { message: `Article with ID ${id} has been removed` };
   }
-
-  // Advanced search with pagination
   async search(params: {
     search?: string;
     categoryId?: string;
@@ -130,56 +133,39 @@ export class ArticlesService {
     skip?: number;
     take?: number;
   }) {
-    const {
-      search,
-      categoryId,
-      tags,
-      startDate,
-      endDate,
-      skip = 0,
-      take = 10,
-    } = params;
+    const { search, categoryId, tags, startDate, endDate } = params;
+    const { skip, take } = sanitizePagination(params.skip, params.take);
 
-    const where: any = {};
+    const where: any = { status: 'published' };
 
     if (search) {
-      where.OR = [
-        { title: { contains: search, mode: 'insensitive' } },
-        { description: { contains: search, mode: 'insensitive' } },
-        { content: { contains: search, mode: 'insensitive' } },
-      ];
+      const q = sanitizeSearch(search);
+      if (q) {
+        where.OR = [
+          { title: { contains: q, mode: 'insensitive' } },
+          { description: { contains: q, mode: 'insensitive' } },
+        ];
+      }
     }
 
-    if (categoryId) {
-      where.categoryId = categoryId;
+    if (categoryId) where.categoryId = categoryId;
+
+    if (tags?.length) {
+      where.tags = { hasSome: tags.slice(0, 10) };
     }
 
-    if (tags && tags.length > 0) {
-      where.tags = {
-        hasSome: tags,
-      };
-    }
-
-    // Filter by date range
     if (startDate || endDate) {
-      where.date = {};
-      if (startDate) {
-        where.date.gte = startDate;
-      }
-      if (endDate) {
-        where.date.lte = endDate;
-      }
+      where.date = {
+        ...(startDate && { gte: startDate }),
+        ...(endDate && { lte: endDate }),
+      };
     }
 
     const [articles, total] = await Promise.all([
       this.prisma.article.findMany({
         where,
-        include: {
-          category: true,
-        },
-        orderBy: {
-          date: 'desc',
-        },
+        include: { category: true },
+        orderBy: { date: 'desc' },
         skip,
         take,
       }),
@@ -188,12 +174,7 @@ export class ArticlesService {
 
     return {
       data: articles,
-      meta: {
-        total,
-        skip,
-        take,
-        pages: Math.ceil(total / take),
-      },
+      meta: { total, skip, take, pages: Math.ceil(total / take) },
     };
   }
 

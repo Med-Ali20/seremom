@@ -17,6 +17,7 @@ import { RolesGuard } from '../auth/guards/roles.guard';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Role } from '../auth/enums/role.enum';
 import { Roles } from '../auth/decorators/roles.decorator';
+import { Throttle } from '@nestjs/throttler';
 
 @Controller('articles')
 export class ArticlesController {
@@ -25,6 +26,7 @@ export class ArticlesController {
   // ── Public GET routes (no auth required) ────────────────────────────────────
 
   @Get()
+  @Throttle({ default: { ttl: 60000, limit: 60 } })
   findAll(
     @Query('search') search?: string,
     @Query('categoryId') categoryId?: string,
@@ -39,6 +41,7 @@ export class ArticlesController {
   }
 
   @Get('search')
+  @Throttle({ default: { ttl: 60000, limit: 30 } }) // 30 searches/min
   search(
     @Query('q') search?: string,
     @Query('categoryId') categoryId?: string,

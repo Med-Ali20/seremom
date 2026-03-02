@@ -1,45 +1,47 @@
-
-import {
-  IsString,
-  IsOptional,
-  IsArray,
-  IsDateString,
-  IsNotEmpty,
-} from 'class-validator';
+import { IsString, IsOptional, IsArray, IsUUID, MaxLength, MinLength, ArrayMaxSize, IsIn } from 'class-validator';
+import { Transform } from 'class-transformer';
 
 export class CreateArticleDto {
   @IsString()
-  @IsNotEmpty()
+  @MinLength(1)
+  @MaxLength(300)
+  @Transform(({ value }) => value?.trim())
   title: string;
 
   @IsString()
-  @IsNotEmpty()
+  @MinLength(1)
+  @MaxLength(1000)
+  @Transform(({ value }) => value?.trim())
   description: string;
 
   @IsString()
-  @IsNotEmpty()
+  @MaxLength(20)
+  @Transform(({ value }) => value?.trim())
   duration: string;
 
   @IsString()
-  @IsNotEmpty()
+  @MinLength(1)
+  @MaxLength(100000)
   content: string;
 
   @IsString()
-  @IsNotEmpty()
-  image: string; // URL returned from /upload/image
+  @MaxLength(500)
+  image: string;
 
   @IsOptional()
-  @IsString()
+  @IsUUID()
   categoryId?: string;
 
-  @IsOptional()
   @IsArray()
+  @ArrayMaxSize(20)
   @IsString({ each: true })
-  tags?: string[];
+  @MaxLength(50, { each: true })
+  tags: string[];
 
-  @IsDateString()
+  @IsString()
   date: string;
 
   @IsOptional()
-  status: string;
+  @IsIn(['published', 'draft'])
+  status?: string;
 }

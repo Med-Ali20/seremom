@@ -10,6 +10,8 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { ConfigService } from '@nestjs/config';
+import { Throttle, SkipThrottle } from '@nestjs/throttler';
+import { LoginThrottleGuard } from '../../common/guards/login-throttle.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -18,31 +20,46 @@ export class AuthController {
     private configService: ConfigService,
   ) {}
   @Post('signup')
+  @UseGuards(LoginThrottleGuard)
+  @Throttle({ default: { ttl: 3600000, limit: 3 } })
   async signUp(
-    @Body() body: { email: string; password: string; firstname?: string, lastname?:string },
+    @Body()
+    body: {
+      email: string;
+      password: string;
+      firstname?: string;
+      lastname?: string;
+    },
   ) {
-    return this.authService.signUp(body.email, body.password, body.firstname, body.lastname);
+    return this.authService.signUp(
+      body.email,
+      body.password,
+      body.firstname,
+      body.lastname,
+    );
   }
 
   @UseGuards(AuthGuard('local'))
   @Post('signin')
+  @UseGuards(LoginThrottleGuard)
+  @Throttle({ default: { ttl: 900000, limit: 5 } })
   async signIn(@Req() req) {
     return this.authService.signIn(req.user);
   }
 
   @Get('google')
+  @SkipThrottle()
   @UseGuards(AuthGuard('google'))
   async googleAuth() {
     // Initiates Google OAuth flow
   }
 
   @Get('google/callback')
+  @SkipThrottle()
   @UseGuards(AuthGuard('google'))
   async googleAuthRedirect(@Req() req, @Res() res) {
     try {
-      console.log('Google callback - User profile:', req.user);
       const result = await this.authService.googleLogin(req.user);
-      console.log('Login successful, token generated');
 
       const frontendUrl =
         this.configService.get<string>('FRONTEND_URL') ||

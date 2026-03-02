@@ -121,12 +121,12 @@ model AssessmentResult {
   assessmentTitle String
   answers         Json
   totalScore      Int?
+  topScore        Int?     // ← add this
   diagnosis       String?
   createdAt       DateTime @default(now())
   userId          String
   user            User     @relation(fields: [userId], references: [id])
 }
-
 model JournalEntry {
   id        String   @id @default(uuid())
   userId    String

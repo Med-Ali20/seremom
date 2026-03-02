@@ -32,7 +32,6 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
         photo: photos?.[0]?.value,
       };
       
-      console.log('Google strategy - normalized user:', user);
       done(null, user);
     } catch (error) {
       console.error('Google strategy validation error:', error);

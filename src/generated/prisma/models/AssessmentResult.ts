@@ -28,10 +28,12 @@ export type AggregateAssessmentResult = {
 
 export type AssessmentResultAvgAggregateOutputType = {
   totalScore: number | null
+  topScore: number | null
 }
 
 export type AssessmentResultSumAggregateOutputType = {
   totalScore: number | null
+  topScore: number | null
 }
 
 export type AssessmentResultMinAggregateOutputType = {
@@ -39,6 +41,7 @@ export type AssessmentResultMinAggregateOutputType = {
   assessmentId: string | null
   assessmentTitle: string | null
   totalScore: number | null
+  topScore: number | null
   diagnosis: string | null
   createdAt: Date | null
   userId: string | null
@@ -49,6 +52,7 @@ export type AssessmentResultMaxAggregateOutputType = {
   assessmentId: string | null
   assessmentTitle: string | null
   totalScore: number | null
+  topScore: number | null
   diagnosis: string | null
   createdAt: Date | null
   userId: string | null
@@ -60,6 +64,7 @@ export type AssessmentResultCountAggregateOutputType = {
   assessmentTitle: number
   answers: number
   totalScore: number
+  topScore: number
   diagnosis: number
   createdAt: number
   userId: number
@@ -69,10 +74,12 @@ export type AssessmentResultCountAggregateOutputType = {
 
 export type AssessmentResultAvgAggregateInputType = {
   totalScore?: true
+  topScore?: true
 }
 
 export type AssessmentResultSumAggregateInputType = {
   totalScore?: true
+  topScore?: true
 }
 
 export type AssessmentResultMinAggregateInputType = {
@@ -80,6 +87,7 @@ export type AssessmentResultMinAggregateInputType = {
   assessmentId?: true
   assessmentTitle?: true
   totalScore?: true
+  topScore?: true
   diagnosis?: true
   createdAt?: true
   userId?: true
@@ -90,6 +98,7 @@ export type AssessmentResultMaxAggregateInputType = {
   assessmentId?: true
   assessmentTitle?: true
   totalScore?: true
+  topScore?: true
   diagnosis?: true
   createdAt?: true
   userId?: true
@@ -101,6 +110,7 @@ export type AssessmentResultCountAggregateInputType = {
   assessmentTitle?: true
   answers?: true
   totalScore?: true
+  topScore?: true
   diagnosis?: true
   createdAt?: true
   userId?: true
@@ -199,6 +209,7 @@ export type AssessmentResultGroupByOutputType = {
   assessmentTitle: string
   answers: runtime.JsonValue
   totalScore: number | null
+  topScore: number | null
   diagnosis: string | null
   createdAt: Date
   userId: string
@@ -233,6 +244,7 @@ export type AssessmentResultWhereInput = {
   assessmentTitle?: Prisma.StringFilter<"AssessmentResult"> | string
   answers?: Prisma.JsonFilter<"AssessmentResult">
   totalScore?: Prisma.IntNullableFilter<"AssessmentResult"> | number | null
+  topScore?: Prisma.IntNullableFilter<"AssessmentResult"> | number | null
   diagnosis?: Prisma.StringNullableFilter<"AssessmentResult"> | string | null
   createdAt?: Prisma.DateTimeFilter<"AssessmentResult"> | Date | string
   userId?: Prisma.StringFilter<"AssessmentResult"> | string
@@ -245,6 +257,7 @@ export type AssessmentResultOrderByWithRelationInput = {
   assessmentTitle?: Prisma.SortOrder
   answers?: Prisma.SortOrder
   totalScore?: Prisma.SortOrderInput | Prisma.SortOrder
+  topScore?: Prisma.SortOrderInput | Prisma.SortOrder
   diagnosis?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -260,6 +273,7 @@ export type AssessmentResultWhereUniqueInput = Prisma.AtLeast<{
   assessmentTitle?: Prisma.StringFilter<"AssessmentResult"> | string
   answers?: Prisma.JsonFilter<"AssessmentResult">
   totalScore?: Prisma.IntNullableFilter<"AssessmentResult"> | number | null
+  topScore?: Prisma.IntNullableFilter<"AssessmentResult"> | number | null
   diagnosis?: Prisma.StringNullableFilter<"AssessmentResult"> | string | null
   createdAt?: Prisma.DateTimeFilter<"AssessmentResult"> | Date | string
   userId?: Prisma.StringFilter<"AssessmentResult"> | string
@@ -272,6 +286,7 @@ export type AssessmentResultOrderByWithAggregationInput = {
   assessmentTitle?: Prisma.SortOrder
   answers?: Prisma.SortOrder
   totalScore?: Prisma.SortOrderInput | Prisma.SortOrder
+  topScore?: Prisma.SortOrderInput | Prisma.SortOrder
   diagnosis?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -291,6 +306,7 @@ export type AssessmentResultScalarWhereWithAggregatesInput = {
   assessmentTitle?: Prisma.StringWithAggregatesFilter<"AssessmentResult"> | string
   answers?: Prisma.JsonWithAggregatesFilter<"AssessmentResult">
   totalScore?: Prisma.IntNullableWithAggregatesFilter<"AssessmentResult"> | number | null
+  topScore?: Prisma.IntNullableWithAggregatesFilter<"AssessmentResult"> | number | null
   diagnosis?: Prisma.StringNullableWithAggregatesFilter<"AssessmentResult"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"AssessmentResult"> | Date | string
   userId?: Prisma.StringWithAggregatesFilter<"AssessmentResult"> | string
@@ -302,6 +318,7 @@ export type AssessmentResultCreateInput = {
   assessmentTitle: string
   answers: Prisma.JsonNullValueInput | runtime.InputJsonValue
   totalScore?: number | null
+  topScore?: number | null
   diagnosis?: string | null
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutAssessmentResultsInput
@@ -313,6 +330,7 @@ export type AssessmentResultUncheckedCreateInput = {
   assessmentTitle: string
   answers: Prisma.JsonNullValueInput | runtime.InputJsonValue
   totalScore?: number | null
+  topScore?: number | null
   diagnosis?: string | null
   createdAt?: Date | string
   userId: string
@@ -324,6 +342,7 @@ export type AssessmentResultUpdateInput = {
   assessmentTitle?: Prisma.StringFieldUpdateOperationsInput | string
   answers?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   totalScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  topScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   diagnosis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutAssessmentResultsNestedInput
@@ -335,6 +354,7 @@ export type AssessmentResultUncheckedUpdateInput = {
   assessmentTitle?: Prisma.StringFieldUpdateOperationsInput | string
   answers?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   totalScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  topScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   diagnosis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -346,6 +366,7 @@ export type AssessmentResultCreateManyInput = {
   assessmentTitle: string
   answers: Prisma.JsonNullValueInput | runtime.InputJsonValue
   totalScore?: number | null
+  topScore?: number | null
   diagnosis?: string | null
   createdAt?: Date | string
   userId: string
@@ -357,6 +378,7 @@ export type AssessmentResultUpdateManyMutationInput = {
   assessmentTitle?: Prisma.StringFieldUpdateOperationsInput | string
   answers?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   totalScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  topScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   diagnosis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -367,6 +389,7 @@ export type AssessmentResultUncheckedUpdateManyInput = {
   assessmentTitle?: Prisma.StringFieldUpdateOperationsInput | string
   answers?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   totalScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  topScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   diagnosis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -388,6 +411,7 @@ export type AssessmentResultCountOrderByAggregateInput = {
   assessmentTitle?: Prisma.SortOrder
   answers?: Prisma.SortOrder
   totalScore?: Prisma.SortOrder
+  topScore?: Prisma.SortOrder
   diagnosis?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -395,6 +419,7 @@ export type AssessmentResultCountOrderByAggregateInput = {
 
 export type AssessmentResultAvgOrderByAggregateInput = {
   totalScore?: Prisma.SortOrder
+  topScore?: Prisma.SortOrder
 }
 
 export type AssessmentResultMaxOrderByAggregateInput = {
@@ -402,6 +427,7 @@ export type AssessmentResultMaxOrderByAggregateInput = {
   assessmentId?: Prisma.SortOrder
   assessmentTitle?: Prisma.SortOrder
   totalScore?: Prisma.SortOrder
+  topScore?: Prisma.SortOrder
   diagnosis?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -412,6 +438,7 @@ export type AssessmentResultMinOrderByAggregateInput = {
   assessmentId?: Prisma.SortOrder
   assessmentTitle?: Prisma.SortOrder
   totalScore?: Prisma.SortOrder
+  topScore?: Prisma.SortOrder
   diagnosis?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -419,6 +446,7 @@ export type AssessmentResultMinOrderByAggregateInput = {
 
 export type AssessmentResultSumOrderByAggregateInput = {
   totalScore?: Prisma.SortOrder
+  topScore?: Prisma.SortOrder
 }
 
 export type AssessmentResultCreateNestedManyWithoutUserInput = {
@@ -477,6 +505,7 @@ export type AssessmentResultCreateWithoutUserInput = {
   assessmentTitle: string
   answers: Prisma.JsonNullValueInput | runtime.InputJsonValue
   totalScore?: number | null
+  topScore?: number | null
   diagnosis?: string | null
   createdAt?: Date | string
 }
@@ -487,6 +516,7 @@ export type AssessmentResultUncheckedCreateWithoutUserInput = {
   assessmentTitle: string
   answers: Prisma.JsonNullValueInput | runtime.InputJsonValue
   totalScore?: number | null
+  topScore?: number | null
   diagnosis?: string | null
   createdAt?: Date | string
 }
@@ -526,6 +556,7 @@ export type AssessmentResultScalarWhereInput = {
   assessmentTitle?: Prisma.StringFilter<"AssessmentResult"> | string
   answers?: Prisma.JsonFilter<"AssessmentResult">
   totalScore?: Prisma.IntNullableFilter<"AssessmentResult"> | number | null
+  topScore?: Prisma.IntNullableFilter<"AssessmentResult"> | number | null
   diagnosis?: Prisma.StringNullableFilter<"AssessmentResult"> | string | null
   createdAt?: Prisma.DateTimeFilter<"AssessmentResult"> | Date | string
   userId?: Prisma.StringFilter<"AssessmentResult"> | string
@@ -537,6 +568,7 @@ export type AssessmentResultCreateManyUserInput = {
   assessmentTitle: string
   answers: Prisma.JsonNullValueInput | runtime.InputJsonValue
   totalScore?: number | null
+  topScore?: number | null
   diagnosis?: string | null
   createdAt?: Date | string
 }
@@ -547,6 +579,7 @@ export type AssessmentResultUpdateWithoutUserInput = {
   assessmentTitle?: Prisma.StringFieldUpdateOperationsInput | string
   answers?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   totalScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  topScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   diagnosis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -557,6 +590,7 @@ export type AssessmentResultUncheckedUpdateWithoutUserInput = {
   assessmentTitle?: Prisma.StringFieldUpdateOperationsInput | string
   answers?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   totalScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  topScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   diagnosis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -567,6 +601,7 @@ export type AssessmentResultUncheckedUpdateManyWithoutUserInput = {
   assessmentTitle?: Prisma.StringFieldUpdateOperationsInput | string
   answers?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   totalScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  topScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   diagnosis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -579,6 +614,7 @@ export type AssessmentResultSelect<ExtArgs extends runtime.Types.Extensions.Inte
   assessmentTitle?: boolean
   answers?: boolean
   totalScore?: boolean
+  topScore?: boolean
   diagnosis?: boolean
   createdAt?: boolean
   userId?: boolean
@@ -591,6 +627,7 @@ export type AssessmentResultSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   assessmentTitle?: boolean
   answers?: boolean
   totalScore?: boolean
+  topScore?: boolean
   diagnosis?: boolean
   createdAt?: boolean
   userId?: boolean
@@ -603,6 +640,7 @@ export type AssessmentResultSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   assessmentTitle?: boolean
   answers?: boolean
   totalScore?: boolean
+  topScore?: boolean
   diagnosis?: boolean
   createdAt?: boolean
   userId?: boolean
@@ -615,12 +653,13 @@ export type AssessmentResultSelectScalar = {
   assessmentTitle?: boolean
   answers?: boolean
   totalScore?: boolean
+  topScore?: boolean
   diagnosis?: boolean
   createdAt?: boolean
   userId?: boolean
 }
 
-export type AssessmentResultOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "assessmentId" | "assessmentTitle" | "answers" | "totalScore" | "diagnosis" | "createdAt" | "userId", ExtArgs["result"]["assessmentResult"]>
+export type AssessmentResultOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "assessmentId" | "assessmentTitle" | "answers" | "totalScore" | "topScore" | "diagnosis" | "createdAt" | "userId", ExtArgs["result"]["assessmentResult"]>
 export type AssessmentResultInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -642,6 +681,7 @@ export type $AssessmentResultPayload<ExtArgs extends runtime.Types.Extensions.In
     assessmentTitle: string
     answers: runtime.JsonValue
     totalScore: number | null
+    topScore: number | null
     diagnosis: string | null
     createdAt: Date
     userId: string
@@ -1074,6 +1114,7 @@ export interface AssessmentResultFieldRefs {
   readonly assessmentTitle: Prisma.FieldRef<"AssessmentResult", 'String'>
   readonly answers: Prisma.FieldRef<"AssessmentResult", 'Json'>
   readonly totalScore: Prisma.FieldRef<"AssessmentResult", 'Int'>
+  readonly topScore: Prisma.FieldRef<"AssessmentResult", 'Int'>
   readonly diagnosis: Prisma.FieldRef<"AssessmentResult", 'String'>
   readonly createdAt: Prisma.FieldRef<"AssessmentResult", 'DateTime'>
   readonly userId: Prisma.FieldRef<"AssessmentResult", 'String'>

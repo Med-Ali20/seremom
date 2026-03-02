@@ -1,7 +1,12 @@
-import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateJournalEntryDto } from './dto/create-journal.dto';
 import { UpdateJournalEntryDto } from './dto/update-journal.dto';
+import { sanitizeSearch } from '../../common/utils/sanitize-search';
 
 @Injectable()
 export class JournalService {
@@ -36,7 +41,9 @@ export class JournalService {
 
     // SECURITY CHECK: Verify ownership
     if (entry.userId !== userId) {
-      throw new ForbiddenException('You can only access your own journal entries');
+      throw new ForbiddenException(
+        'You can only access your own journal entries',
+      );
     }
 
     return entry;
@@ -56,14 +63,15 @@ export class JournalService {
   }
 
   async searchByFeeling(userId: string, feeling: string) {
+    const VALID_FEELINGS = ['depressed', 'sad', 'neutral', 'happy', 'great'];
+
+    // feeling is an enum — validate against whitelist instead of free-text search
+    if (!VALID_FEELINGS.includes(feeling?.toLowerCase())) {
+      return []; // return empty instead of throwing — no info leakage
+    }
+
     return this.prisma.journalEntry.findMany({
-      where: {
-        userId,
-        feeling: {
-          contains: feeling,
-          mode: 'insensitive',
-        },
-      },
+      where: { userId, feeling: feeling.toLowerCase() },
       orderBy: { date: 'desc' },
     });
   }

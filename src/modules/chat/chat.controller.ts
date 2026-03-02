@@ -15,6 +15,7 @@ import { ChatService } from './chat.service';
 import { SendMessageDto } from './dto/send-message.dto';
 import { UpdateConversationDto } from './dto/update-conversation.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { Throttle, SkipThrottle } from '@nestjs/throttler';
 
 @Controller('chat')
 @UseGuards(JwtAuthGuard)
@@ -27,6 +28,7 @@ export class ChatController {
   }
 
   @Get('conversations')
+  @SkipThrottle()
   getUserConversations(@Req() req: any) {
     return this.chatService.getUserConversations(req.user.userId);
   }
@@ -40,6 +42,7 @@ export class ChatController {
   }
 
   @Post('conversations/:conversationId/messages')
+  @Throttle({ short: { ttl: 60000, limit: 20 } })
   async sendMessage(
     @Param('conversationId') conversationId: string,
     @Req() req: any,
@@ -76,6 +79,7 @@ export class ChatController {
   }
 
   @Get('messages/count')
+  @SkipThrottle()
   getUserMessageCount(@Req() req: any) {
     const since = new Date(Date.now() - 4 * 60 * 60 * 1000);
     return this.chatService

@@ -178,6 +178,7 @@ export const AssessmentResultScalarFieldEnum = {
   assessmentTitle: 'assessmentTitle',
   answers: 'answers',
   totalScore: 'totalScore',
+  topScore: 'topScore',
   diagnosis: 'diagnosis',
   createdAt: 'createdAt',
   userId: 'userId'

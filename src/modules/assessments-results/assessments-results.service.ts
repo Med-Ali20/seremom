@@ -38,6 +38,7 @@ export class AssessmentsResultsService {
         assessmentTitle: assessment.title,
         answers: dto.answers as any,
         totalScore: dto.totalScore,
+        topScore: dto.topScore, 
         diagnosis: matched?.label ?? null,
         userId,
       },
