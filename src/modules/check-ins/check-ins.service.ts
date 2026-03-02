@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateCheckInDto } from './dto/create-check-in.dto';
 import { UpdateCheckInDto } from './dto/update-check-in.dto';
@@ -7,12 +11,19 @@ import { UpdateCheckInDto } from './dto/update-check-in.dto';
 export class CheckInsService {
   constructor(private prisma: PrismaService) {}
 
-  async create(userId: string, createCheckInDto: CreateCheckInDto) {
+  async create(userId: string, dto: CreateCheckInDto) {
+    const date = new Date(dto.date);
+    date.setHours(0, 0, 0, 0);
+
     return this.prisma.checkIn.create({
       data: {
-        ...createCheckInDto,
-        date: new Date(createCheckInDto.date),
-        userId, // Automatically associate with the authenticated user
+        stress: dto.stress,
+        mood: dto.mood,
+        energy: dto.energy,
+        sleep: dto.sleep,
+        notes: dto.notes,
+        date,
+        userId,
       },
     });
   }
@@ -54,17 +65,12 @@ export class CheckInsService {
       orderBy: { date: 'desc' },
     });
   }
-
   async update(id: string, userId: string, updateCheckInDto: UpdateCheckInDto) {
-    // First verify ownership
     await this.findOne(id, userId);
 
     return this.prisma.checkIn.update({
       where: { id },
-      data: {
-        ...updateCheckInDto,
-        ...(updateCheckInDto.date && { date: new Date(updateCheckInDto.date) }),
-      },
+      data: updateCheckInDto,
     });
   }
 

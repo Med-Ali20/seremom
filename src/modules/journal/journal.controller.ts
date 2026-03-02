@@ -13,6 +13,7 @@ import { JournalService } from './journal.service';
 import { CreateJournalEntryDto } from './dto/create-journal.dto';
 import { UpdateJournalEntryDto } from './dto/update-journal.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { Throttle } from '@nestjs/throttler';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
 
 @Controller('journal')
@@ -34,12 +35,18 @@ export class JournalController {
     return this.journalService.findAll(user.userId);
   }
 
+
   @Get('search')
-  searchByFeeling(
+  @Throttle({ short: { ttl: 60000, limit: 30 } }) // 30 searches/min
+  search(
     @CurrentUser() user: { userId: string; email: string },
-    @Query('feeling') feeling: string,
+    @Query('q') q?: string,
+    @Query('feeling') feeling?: string,
   ) {
-    return this.journalService.searchByFeeling(user.userId, feeling);
+    if (feeling)
+      return this.journalService.searchByFeeling(user.userId, feeling);
+    if (q) return this.journalService.search(user.userId, q);
+    return this.journalService.findAll(user.userId);
   }
 
   @Get('range')

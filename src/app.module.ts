@@ -9,6 +9,7 @@ import { AssessmentsModule } from './modules/assessments/assessments.module';
 import { AssessmentsResultsModule } from './modules/assessments-results/assessments-results.module';
 import { JournalModule } from './modules/journal/journal.module';
 import { AssessmentCategoriesModule } from './modules/assessment-categories/assessment-categories.module';
+import { LoginAttemptsService } from './common/services/login-attempts.service';
 import { AuthModule } from './modules/auth/auth.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { ChatModule } from './modules/chat/chat.module';
@@ -55,6 +56,7 @@ import { APP_GUARD } from '@nestjs/core';
   controllers: [AppController],
   providers: [
     AppService,
+    LoginAttemptsService,
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,

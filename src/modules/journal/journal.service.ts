@@ -97,4 +97,20 @@ export class JournalService {
       where: { id },
     });
   }
+  async search(userId: string, query: string) {
+    const q = sanitizeSearch(query); // caps at 100 chars, escapes LIKE chars, trims
+    if (!q) return this.findAll(userId);
+
+    return this.prisma.journalEntry.findMany({
+      where: {
+        userId,
+        OR: [
+          { title: { contains: q, mode: 'insensitive' } },
+          { thoughts: { contains: q, mode: 'insensitive' } },
+        ],
+      },
+      orderBy: { date: 'desc' },
+      take: 50, // cap results
+    });
+  }
 }

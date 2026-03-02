@@ -9,6 +9,10 @@ import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { GoogleStrategy } from './strategies/google.strategy';
 import { PrismaModule } from '../prisma/prisma.module';
+import { LoginThrottleGuard } from '../../common/guards/login-throttle.guard';
+import { LoginAttemptsService } from '../../common/services/login-attempts.service';
+
+
 
 @Module({
   imports: [
@@ -24,7 +28,7 @@ import { PrismaModule } from '../prisma/prisma.module';
       inject: [ConfigService],
     }),
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy, GoogleStrategy],
+  providers: [AuthService, LocalStrategy, JwtStrategy, GoogleStrategy, LoginThrottleGuard, LoginAttemptsService],
   controllers: [AuthController],
 })
 export class AuthModule {}

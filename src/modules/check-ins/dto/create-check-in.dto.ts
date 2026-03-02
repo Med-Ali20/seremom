@@ -1,29 +1,14 @@
-import { IsInt, IsOptional, IsString, Min, Max, MaxLength } from 'class-validator';
+import { IsInt, IsOptional, IsString, IsDateString, Min, Max, MaxLength } from 'class-validator';
 import { Transform } from 'class-transformer';
 
 export class CreateCheckInDto {
-  @Transform(({ value }) => new Date(value))
-  date: Date;
+  @IsDateString()  // ← accept ISO string, don't try to transform to Date
+  date: string;
 
-  @IsInt()
-  @Min(1)
-  @Max(5)
-  stress: number;
-
-  @IsInt()
-  @Min(1)
-  @Max(5)
-  mood: number;
-
-  @IsInt()
-  @Min(1)
-  @Max(5)
-  energy: number;
-
-  @IsInt()
-  @Min(1)
-  @Max(5)
-  sleep: number;
+  @IsInt() @Min(1) @Max(5) stress: number;
+  @IsInt() @Min(1) @Max(5) mood: number;
+  @IsInt() @Min(1) @Max(5) energy: number;
+  @IsInt() @Min(1) @Max(5) sleep: number;
 
   @IsOptional()
   @IsString()

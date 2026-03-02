@@ -1,7 +1,7 @@
 import { IsString, MinLength, MaxLength } from 'class-validator';
 import { Transform } from 'class-transformer';
 
-export class CreateCategoryDto {
+export class CreateAssessmentCategoryDto {
   @IsString()
   @MinLength(1)
   @MaxLength(100)
