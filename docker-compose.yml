@@ -1,9 +1,30 @@
 services:
+  db:
+    image: postgres:15-alpine
+    container_name: seremom-db
+    restart: always
+    environment:
+      POSTGRES_USER: seremom_user
+      POSTGRES_PASSWORD: your_secure_password # CHANGE THIS
+      POSTGRES_DB: seremom
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
   api:
     build: .
     container_name: seremom-backend
     restart: always
-    ports:
-      - "3000:3000"
+    depends_on:
+      - db
     env_file:
       - .env
+    ports:
+      - "3000:3000"
+    # This ensures migrations run BEFORE the app starts
+    command: >
+      sh -c "npx prisma migrate deploy && npm run start:prod"
+
+volumes:
+  postgres_data:
