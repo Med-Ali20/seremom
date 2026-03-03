@@ -1,6 +1,12 @@
 import {
-  IsString, IsNotEmpty, IsNumber, IsOptional,
-  IsBoolean, IsArray, IsObject,
+  IsString,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsBoolean,
+  IsArray,
+  IsObject,
+  IsDefined,
 } from 'class-validator';
 
 export class CreateAssessmentDto {
@@ -26,10 +32,11 @@ export class CreateAssessmentDto {
   @IsOptional()
   @IsString()
   categoryId?: string;
-
-  // Array of { id, title, reversed, answers: [{id, text, score}] }
+  @IsArray() // Explicitly tell Nest this is an array
+  @IsDefined()
   questions: any;
 
-  // Array of { id, label, description, minPercent, maxPercent }
+  @IsArray() // Explicitly tell Nest this is an array
+  @IsDefined()
   diagnoses: any;
 }
