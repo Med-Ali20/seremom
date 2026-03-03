@@ -1,25 +1,25 @@
-# Use Node 22 for compatibility with your NestJS 11 features
 FROM node:22-alpine
 
 WORKDIR /app
 
-# Copy package files
+# Copy package files first for better caching
 COPY package*.json ./
 
-# Install dependencies
+# Install ALL dependencies (including devDeps like @nestjs/cli) 
+# so we can run the build
 RUN npm install
 
-# Copy the rest of your code
+# Copy everything else
 COPY . .
 
-# Generate Prisma Client
+# Generate Prisma Client (critical for the build to pass)
 RUN npx prisma generate
 
-# Build the NestJS app
+# Run the build - this creates the /app/dist folder
 RUN npm run build
 
-# Expose the internal port
+# Expose NestJS default port
 EXPOSE 3000
 
-# Start the app
+# Start the application
 CMD ["npm", "run", "start:prod"]
