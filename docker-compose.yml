@@ -5,7 +5,7 @@ services:
     restart: always
     environment:
       POSTGRES_USER: seremom_user
-      POSTGRES_PASSWORD: seremom 
+      POSTGRES_PASSWORD: seremom
       POSTGRES_DB: seremom
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -24,6 +24,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    environment:
+      DATABASE_URL: "postgresql://seremom_user:seremom@db:5432/seremom?schema=public"
     env_file:
       - .env
     ports:
@@ -31,7 +33,7 @@ services:
     volumes:
       - uploads_data:/app/uploads
     command: >
-      sh -c "npx prisma migrate deploy && node dist/main.js"
+      sh -c "npx prisma migrate deploy --schema=prisma/schema.prisma && node dist/main.js"
 
 volumes:
   postgres_data:
