@@ -5,7 +5,7 @@ services:
     restart: always
     environment:
       POSTGRES_USER: seremom_user
-      POSTGRES_PASSWORD: your_secure_password # CHANGE THIS
+      POSTGRES_PASSWORD: seremom 
       POSTGRES_DB: seremom
     volumes:
       - postgres_data:/var/lib/postgresql/data
