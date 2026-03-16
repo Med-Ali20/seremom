@@ -7,16 +7,6 @@ import { join } from 'path';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true, // strips unknown properties
-      forbidNonWhitelisted: true, // throws on unknown properties
-      transform: true, // auto-transforms types
-      transformOptions: {
-        enableImplicitConversion: true,
-      },
-    }),
-  );
 
   app.useGlobalPipes(
     new SanitizePipe(),
@@ -24,15 +14,34 @@ async function bootstrap() {
       whitelist: true,
       forbidNonWhitelisted: true,
       transform: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
     }),
   );
+
   app.useStaticAssets(join(process.cwd(), 'uploads'), { prefix: '/uploads' });
+
+  const allowedOrigins = [
+    'http://localhost:3001',
+    'http://localhost:3000',
+    'https://seremom.com',
+    'https://www.seremom.com',
+    ...(process.env.FRONTEND_URL ? [process.env.FRONTEND_URL] : []),
+  ];
+
   app.enableCors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3001',
+    origin: (origin, callback) => {
+      // Allow requests with no origin (mobile apps, curl, server-to-server)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+      callback(new Error(`CORS blocked: ${origin}`));
+    },
     credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization'], // ← this is critical
+    allowedHeaders: ['Content-Type', 'Authorization'],
     methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
   });
+
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
