@@ -11,20 +11,28 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U seremom_user -d seremom"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   api:
     build: .
     container_name: seremom-backend
     restart: always
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     env_file:
       - .env
     ports:
       - "3000:3000"
-    # This ensures migrations run BEFORE the app starts
+    volumes:
+      - uploads_data:/app/uploads
     command: >
-      sh -c "npx prisma migrate deploy && npm run start:prod"
+      sh -c "npx prisma migrate deploy && node dist/main.js"
 
 volumes:
   postgres_data:
+  uploads_data:
