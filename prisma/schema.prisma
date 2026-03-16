@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider     = "prisma-client"
   output       = "../src/generated/prisma"
@@ -20,6 +14,23 @@ enum Role {
   SUPERADMIN
 }
 
+enum AuthProvider {
+  EMAIL
+  GOOGLE
+}
+
+enum MessageRole {
+  USER
+  ASSISTANT
+  SYSTEM
+}
+
+enum CheckInSlot {
+  MORNING
+  MIDDAY
+  EVENING
+}
+
 model User {
   id                   String               @id @default(uuid())
   email                String               @unique
@@ -32,6 +43,7 @@ model User {
   createdAt            DateTime             @default(now())
   checkIns             CheckIn[]
   journalEntries       JournalEntry[]
+  journalReflections   JournalReflection[]
   assessmentResults    AssessmentResult[]
   chatConversations    ChatConversation[]
   completedOnboarding  Boolean              @default(false)
@@ -72,25 +84,21 @@ model ChatMessage {
   @@index([conversationId])
 }
 
-enum MessageRole {
-  USER
-  ASSISTANT
-  SYSTEM
-}
-
 model CheckIn {
-  id        String   @id @default(uuid())
+  id        String      @id @default(uuid())
   date      DateTime
+  slot      CheckInSlot @default(MORNING)
   stress    Int
   mood      Int
   energy    Int
   sleep     Int
   notes     String?
-  createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime    @default(now())
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
 
-  @@unique([userId, date])
+  @@unique([userId, date, slot])
+  @@index([userId])
 }
 
 model Assessment {
@@ -103,6 +111,7 @@ model Assessment {
   categoryId   String?
   questions    Json
   diagnoses    Json
+  tags         String[]            @default([])
   validated    Boolean             @default(false)
   icon         String?
   createdAt    DateTime            @default(now())
@@ -111,22 +120,40 @@ model Assessment {
 model AssessmentCategory {
   id          String       @id @default(uuid())
   name        String       @unique
+  icon        String?
   createdAt   DateTime     @default(now())
   assessments Assessment[]
 }
 
+// ── AssessmentResult now stores ALL attempts, not just the latest ─────────────
 model AssessmentResult {
   id              String   @id @default(uuid())
   assessmentId    String
   assessmentTitle String
   answers         Json
   totalScore      Int?
-  topScore        Int?     // ← add this
+  topScore        Int?
   diagnosis       String?
+  attempt         Int      @default(1)   // increments on each retake
   createdAt       DateTime @default(now())
   userId          String
   user            User     @relation(fields: [userId], references: [id])
+
+  @@index([userId, assessmentId])
 }
+
+model JournalReflection {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  text      String   @db.Text
+  date      String   // YYYY-MM-DD — one per user per day
+  createdAt DateTime @default(now())
+
+  @@unique([userId, date])
+  @@index([userId])
+}
+
 model JournalEntry {
   id        String   @id @default(uuid())
   userId    String
@@ -157,9 +184,4 @@ model ArticleCategory {
   name      String    @unique
   createdAt DateTime  @default(now())
   articles  Article[]
-}
-
-enum AuthProvider {
-  EMAIL
-  GOOGLE
 }

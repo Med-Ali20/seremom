@@ -32,11 +32,17 @@ export class CreateAssessmentDto {
   @IsOptional()
   @IsString()
   categoryId?: string;
-  @IsArray() // Explicitly tell Nest this is an array
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  tags?: string[];
+
+  @IsArray()
   @IsDefined()
   questions: any;
 
-  @IsArray() // Explicitly tell Nest this is an array
+  @IsArray()
   @IsDefined()
   diagnoses: any;
 }

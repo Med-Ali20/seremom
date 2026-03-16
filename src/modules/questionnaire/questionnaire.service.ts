@@ -35,9 +35,7 @@ function normalizeAnswersToTags(answers: {
     'Polycystic ovary syndrome (PCOS)': ['pcos', 'hormones'],
     Endometriosis: ['endometriosis'],
     'Autoimmune disease (for example lupus or rheumatoid arthritis)': [
-      'autoimmune',
-      'lupus',
-      'arthritis',
+      'autoimmune', 'lupus', 'arthritis',
     ],
     'Iron-deficiency anemia': ['anemia', 'fatigue'],
     'Anxiety (past or present)': ['anxiety', 'mental health'],
@@ -47,26 +45,13 @@ function normalizeAnswersToTags(answers: {
     'Chronic fatigue or low energy': ['fatigue', 'energy'],
     'Insomnia or significant sleep disruption': ['sleep', 'insomnia'],
     'History of pregnancy or birth complications': [
-      'birth',
-      'pregnancy',
-      'complications',
+      'birth', 'pregnancy', 'complications',
     ],
     "Understanding what I'm experiencing": ['education', 'postpartum'],
-    'Managing stress or emotional overload': [
-      'stress',
-      'mental health',
-      'anxiety',
-    ],
+    'Managing stress or emotional overload': ['stress', 'mental health', 'anxiety'],
     'Improving sleep or daily functioning': ['sleep', 'wellness'],
-    'Feeling more grounded and regulated': [
-      'mental health',
-      'wellness',
-      'stress',
-    ],
-    'Navigating motherhood with ongoing health conditions': [
-      'chronic illness',
-      'motherhood',
-    ],
+    'Feeling more grounded and regulated': ['mental health', 'wellness', 'stress'],
+    'Navigating motherhood with ongoing health conditions': ['chronic illness', 'motherhood'],
     'Knowing when to seek additional support': ['support', 'mental health'],
     'Just exploring and learning': ['education', 'wellness'],
   };
@@ -74,11 +59,8 @@ function normalizeAnswersToTags(answers: {
   const tags = new Set<string>();
   for (const answer of raw) {
     const mapped = tagMap[answer];
-    if (mapped) {
-      mapped.forEach((t) => tags.add(t));
-    } else {
-      tags.add(answer.toLowerCase());
-    }
+    if (mapped) mapped.forEach((t) => tags.add(t));
+    else tags.add(answer.toLowerCase());
   }
 
   return [...tags];
@@ -92,7 +74,6 @@ export class QuestionnaireService {
   ) {}
 
   async submitAnswers(userId: string, dto: SubmitQuestionnaireDto) {
-    // Upsert answers (safe to resubmit)
     await this.prisma.questionnaireAnswer.upsert({
       where: { userId },
       create: {
@@ -108,13 +89,11 @@ export class QuestionnaireService {
       },
     });
 
-    // Mark onboarding complete
     const user = await this.prisma.user.update({
       where: { id: userId },
       data: { completedOnboarding: true },
     });
 
-    // Issue a fresh JWT so the middleware sees completedOnboarding: true immediately
     const payload = {
       email: user.email,
       sub: user.id,
@@ -133,6 +112,40 @@ export class QuestionnaireService {
         completedOnboarding: true,
       },
     };
+  }
+
+  // ── NEW: fetch a single user's answers ────────────────────────────────────
+  async getAnswers(userId: string) {
+    return this.prisma.questionnaireAnswer.findUnique({
+      where: { userId },
+      select: {
+        birthTiming: true,
+        healthConditions: true,
+        supportNeeds: true,
+        updatedAt: true,
+      },
+    });
+  }
+
+  // ── NEW: admin — fetch all submitted answers with user info ───────────────
+  async getAllAnswers() {
+    return this.prisma.questionnaireAnswer.findMany({
+      orderBy: { updatedAt: 'desc' },
+      select: {
+        birthTiming: true,
+        healthConditions: true,
+        supportNeeds: true,
+        updatedAt: true,
+        user: {
+          select: {
+            id: true,
+            email: true,
+            firstname: true,
+            lastname: true,
+          },
+        },
+      },
+    });
   }
 
   async getUserTags(userId: string): Promise<string[]> {

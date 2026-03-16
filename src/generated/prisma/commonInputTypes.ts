@@ -174,6 +174,13 @@ export type EnumMessageRoleWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumMessageRoleFilter<$PrismaModel>
 }
 
+export type EnumCheckInSlotFilter<$PrismaModel = never> = {
+  equals?: $Enums.CheckInSlot | Prisma.EnumCheckInSlotFieldRefInput<$PrismaModel>
+  in?: $Enums.CheckInSlot[] | Prisma.ListEnumCheckInSlotFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CheckInSlot[] | Prisma.ListEnumCheckInSlotFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCheckInSlotFilter<$PrismaModel> | $Enums.CheckInSlot
+}
+
 export type IntFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
   in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
@@ -183,6 +190,16 @@ export type IntFilter<$PrismaModel = never> = {
   gt?: number | Prisma.IntFieldRefInput<$PrismaModel>
   gte?: number | Prisma.IntFieldRefInput<$PrismaModel>
   not?: Prisma.NestedIntFilter<$PrismaModel> | number
+}
+
+export type EnumCheckInSlotWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CheckInSlot | Prisma.EnumCheckInSlotFieldRefInput<$PrismaModel>
+  in?: $Enums.CheckInSlot[] | Prisma.ListEnumCheckInSlotFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CheckInSlot[] | Prisma.ListEnumCheckInSlotFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCheckInSlotWithAggregatesFilter<$PrismaModel> | $Enums.CheckInSlot
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCheckInSlotFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCheckInSlotFilter<$PrismaModel>
 }
 
 export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -450,6 +467,23 @@ export type NestedEnumMessageRoleWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumMessageRoleFilter<$PrismaModel>
   _max?: Prisma.NestedEnumMessageRoleFilter<$PrismaModel>
+}
+
+export type NestedEnumCheckInSlotFilter<$PrismaModel = never> = {
+  equals?: $Enums.CheckInSlot | Prisma.EnumCheckInSlotFieldRefInput<$PrismaModel>
+  in?: $Enums.CheckInSlot[] | Prisma.ListEnumCheckInSlotFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CheckInSlot[] | Prisma.ListEnumCheckInSlotFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCheckInSlotFilter<$PrismaModel> | $Enums.CheckInSlot
+}
+
+export type NestedEnumCheckInSlotWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CheckInSlot | Prisma.EnumCheckInSlotFieldRefInput<$PrismaModel>
+  in?: $Enums.CheckInSlot[] | Prisma.ListEnumCheckInSlotFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CheckInSlot[] | Prisma.ListEnumCheckInSlotFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCheckInSlotWithAggregatesFilter<$PrismaModel> | $Enums.CheckInSlot
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCheckInSlotFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCheckInSlotFilter<$PrismaModel>
 }
 
 export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {

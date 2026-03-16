@@ -59,6 +59,7 @@ export const ModelName = {
   Assessment: 'Assessment',
   AssessmentCategory: 'AssessmentCategory',
   AssessmentResult: 'AssessmentResult',
+  JournalReflection: 'JournalReflection',
   JournalEntry: 'JournalEntry',
   Article: 'Article',
   ArticleCategory: 'ArticleCategory'
@@ -134,6 +135,7 @@ export type ChatMessageScalarFieldEnum = (typeof ChatMessageScalarFieldEnum)[key
 export const CheckInScalarFieldEnum = {
   id: 'id',
   date: 'date',
+  slot: 'slot',
   stress: 'stress',
   mood: 'mood',
   energy: 'energy',
@@ -155,6 +157,7 @@ export const AssessmentScalarFieldEnum = {
   categoryId: 'categoryId',
   questions: 'questions',
   diagnoses: 'diagnoses',
+  tags: 'tags',
   validated: 'validated',
   icon: 'icon',
   createdAt: 'createdAt'
@@ -166,6 +169,7 @@ export type AssessmentScalarFieldEnum = (typeof AssessmentScalarFieldEnum)[keyof
 export const AssessmentCategoryScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  icon: 'icon',
   createdAt: 'createdAt'
 } as const
 
@@ -180,11 +184,23 @@ export const AssessmentResultScalarFieldEnum = {
   totalScore: 'totalScore',
   topScore: 'topScore',
   diagnosis: 'diagnosis',
+  attempt: 'attempt',
   createdAt: 'createdAt',
   userId: 'userId'
 } as const
 
 export type AssessmentResultScalarFieldEnum = (typeof AssessmentResultScalarFieldEnum)[keyof typeof AssessmentResultScalarFieldEnum]
+
+
+export const JournalReflectionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  text: 'text',
+  date: 'date',
+  createdAt: 'createdAt'
+} as const
+
+export type JournalReflectionScalarFieldEnum = (typeof JournalReflectionScalarFieldEnum)[keyof typeof JournalReflectionScalarFieldEnum]
 
 
 export const JournalEntryScalarFieldEnum = {

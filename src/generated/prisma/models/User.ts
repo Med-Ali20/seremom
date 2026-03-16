@@ -224,6 +224,7 @@ export type UserWhereInput = {
   completedOnboarding?: Prisma.BoolFilter<"User"> | boolean
   checkIns?: Prisma.CheckInListRelationFilter
   journalEntries?: Prisma.JournalEntryListRelationFilter
+  journalReflections?: Prisma.JournalReflectionListRelationFilter
   assessmentResults?: Prisma.AssessmentResultListRelationFilter
   chatConversations?: Prisma.ChatConversationListRelationFilter
   questionnaireAnswers?: Prisma.XOR<Prisma.QuestionnaireAnswerNullableScalarRelationFilter, Prisma.QuestionnaireAnswerWhereInput> | null
@@ -242,6 +243,7 @@ export type UserOrderByWithRelationInput = {
   completedOnboarding?: Prisma.SortOrder
   checkIns?: Prisma.CheckInOrderByRelationAggregateInput
   journalEntries?: Prisma.JournalEntryOrderByRelationAggregateInput
+  journalReflections?: Prisma.JournalReflectionOrderByRelationAggregateInput
   assessmentResults?: Prisma.AssessmentResultOrderByRelationAggregateInput
   chatConversations?: Prisma.ChatConversationOrderByRelationAggregateInput
   questionnaireAnswers?: Prisma.QuestionnaireAnswerOrderByWithRelationInput
@@ -263,6 +265,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   completedOnboarding?: Prisma.BoolFilter<"User"> | boolean
   checkIns?: Prisma.CheckInListRelationFilter
   journalEntries?: Prisma.JournalEntryListRelationFilter
+  journalReflections?: Prisma.JournalReflectionListRelationFilter
   assessmentResults?: Prisma.AssessmentResultListRelationFilter
   chatConversations?: Prisma.ChatConversationListRelationFilter
   questionnaireAnswers?: Prisma.XOR<Prisma.QuestionnaireAnswerNullableScalarRelationFilter, Prisma.QuestionnaireAnswerWhereInput> | null
@@ -313,6 +316,7 @@ export type UserCreateInput = {
   completedOnboarding?: boolean
   checkIns?: Prisma.CheckInCreateNestedManyWithoutUserInput
   journalEntries?: Prisma.JournalEntryCreateNestedManyWithoutUserInput
+  journalReflections?: Prisma.JournalReflectionCreateNestedManyWithoutUserInput
   assessmentResults?: Prisma.AssessmentResultCreateNestedManyWithoutUserInput
   chatConversations?: Prisma.ChatConversationCreateNestedManyWithoutUserInput
   questionnaireAnswers?: Prisma.QuestionnaireAnswerCreateNestedOneWithoutUserInput
@@ -331,6 +335,7 @@ export type UserUncheckedCreateInput = {
   completedOnboarding?: boolean
   checkIns?: Prisma.CheckInUncheckedCreateNestedManyWithoutUserInput
   journalEntries?: Prisma.JournalEntryUncheckedCreateNestedManyWithoutUserInput
+  journalReflections?: Prisma.JournalReflectionUncheckedCreateNestedManyWithoutUserInput
   assessmentResults?: Prisma.AssessmentResultUncheckedCreateNestedManyWithoutUserInput
   chatConversations?: Prisma.ChatConversationUncheckedCreateNestedManyWithoutUserInput
   questionnaireAnswers?: Prisma.QuestionnaireAnswerUncheckedCreateNestedOneWithoutUserInput
@@ -349,6 +354,7 @@ export type UserUpdateInput = {
   completedOnboarding?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkIns?: Prisma.CheckInUpdateManyWithoutUserNestedInput
   journalEntries?: Prisma.JournalEntryUpdateManyWithoutUserNestedInput
+  journalReflections?: Prisma.JournalReflectionUpdateManyWithoutUserNestedInput
   assessmentResults?: Prisma.AssessmentResultUpdateManyWithoutUserNestedInput
   chatConversations?: Prisma.ChatConversationUpdateManyWithoutUserNestedInput
   questionnaireAnswers?: Prisma.QuestionnaireAnswerUpdateOneWithoutUserNestedInput
@@ -367,6 +373,7 @@ export type UserUncheckedUpdateInput = {
   completedOnboarding?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkIns?: Prisma.CheckInUncheckedUpdateManyWithoutUserNestedInput
   journalEntries?: Prisma.JournalEntryUncheckedUpdateManyWithoutUserNestedInput
+  journalReflections?: Prisma.JournalReflectionUncheckedUpdateManyWithoutUserNestedInput
   assessmentResults?: Prisma.AssessmentResultUncheckedUpdateManyWithoutUserNestedInput
   chatConversations?: Prisma.ChatConversationUncheckedUpdateManyWithoutUserNestedInput
   questionnaireAnswers?: Prisma.QuestionnaireAnswerUncheckedUpdateOneWithoutUserNestedInput
@@ -535,6 +542,20 @@ export type UserUpdateOneRequiredWithoutAssessmentResultsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAssessmentResultsInput, Prisma.UserUpdateWithoutAssessmentResultsInput>, Prisma.UserUncheckedUpdateWithoutAssessmentResultsInput>
 }
 
+export type UserCreateNestedOneWithoutJournalReflectionsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutJournalReflectionsInput, Prisma.UserUncheckedCreateWithoutJournalReflectionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutJournalReflectionsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutJournalReflectionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutJournalReflectionsInput, Prisma.UserUncheckedCreateWithoutJournalReflectionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutJournalReflectionsInput
+  upsert?: Prisma.UserUpsertWithoutJournalReflectionsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutJournalReflectionsInput, Prisma.UserUpdateWithoutJournalReflectionsInput>, Prisma.UserUncheckedUpdateWithoutJournalReflectionsInput>
+}
+
 export type UserCreateNestedOneWithoutJournalEntriesInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutJournalEntriesInput, Prisma.UserUncheckedCreateWithoutJournalEntriesInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutJournalEntriesInput
@@ -562,6 +583,7 @@ export type UserCreateWithoutQuestionnaireAnswersInput = {
   completedOnboarding?: boolean
   checkIns?: Prisma.CheckInCreateNestedManyWithoutUserInput
   journalEntries?: Prisma.JournalEntryCreateNestedManyWithoutUserInput
+  journalReflections?: Prisma.JournalReflectionCreateNestedManyWithoutUserInput
   assessmentResults?: Prisma.AssessmentResultCreateNestedManyWithoutUserInput
   chatConversations?: Prisma.ChatConversationCreateNestedManyWithoutUserInput
 }
@@ -579,6 +601,7 @@ export type UserUncheckedCreateWithoutQuestionnaireAnswersInput = {
   completedOnboarding?: boolean
   checkIns?: Prisma.CheckInUncheckedCreateNestedManyWithoutUserInput
   journalEntries?: Prisma.JournalEntryUncheckedCreateNestedManyWithoutUserInput
+  journalReflections?: Prisma.JournalReflectionUncheckedCreateNestedManyWithoutUserInput
   assessmentResults?: Prisma.AssessmentResultUncheckedCreateNestedManyWithoutUserInput
   chatConversations?: Prisma.ChatConversationUncheckedCreateNestedManyWithoutUserInput
 }
@@ -612,6 +635,7 @@ export type UserUpdateWithoutQuestionnaireAnswersInput = {
   completedOnboarding?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkIns?: Prisma.CheckInUpdateManyWithoutUserNestedInput
   journalEntries?: Prisma.JournalEntryUpdateManyWithoutUserNestedInput
+  journalReflections?: Prisma.JournalReflectionUpdateManyWithoutUserNestedInput
   assessmentResults?: Prisma.AssessmentResultUpdateManyWithoutUserNestedInput
   chatConversations?: Prisma.ChatConversationUpdateManyWithoutUserNestedInput
 }
@@ -629,6 +653,7 @@ export type UserUncheckedUpdateWithoutQuestionnaireAnswersInput = {
   completedOnboarding?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkIns?: Prisma.CheckInUncheckedUpdateManyWithoutUserNestedInput
   journalEntries?: Prisma.JournalEntryUncheckedUpdateManyWithoutUserNestedInput
+  journalReflections?: Prisma.JournalReflectionUncheckedUpdateManyWithoutUserNestedInput
   assessmentResults?: Prisma.AssessmentResultUncheckedUpdateManyWithoutUserNestedInput
   chatConversations?: Prisma.ChatConversationUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -646,6 +671,7 @@ export type UserCreateWithoutChatConversationsInput = {
   completedOnboarding?: boolean
   checkIns?: Prisma.CheckInCreateNestedManyWithoutUserInput
   journalEntries?: Prisma.JournalEntryCreateNestedManyWithoutUserInput
+  journalReflections?: Prisma.JournalReflectionCreateNestedManyWithoutUserInput
   assessmentResults?: Prisma.AssessmentResultCreateNestedManyWithoutUserInput
   questionnaireAnswers?: Prisma.QuestionnaireAnswerCreateNestedOneWithoutUserInput
 }
@@ -663,6 +689,7 @@ export type UserUncheckedCreateWithoutChatConversationsInput = {
   completedOnboarding?: boolean
   checkIns?: Prisma.CheckInUncheckedCreateNestedManyWithoutUserInput
   journalEntries?: Prisma.JournalEntryUncheckedCreateNestedManyWithoutUserInput
+  journalReflections?: Prisma.JournalReflectionUncheckedCreateNestedManyWithoutUserInput
   assessmentResults?: Prisma.AssessmentResultUncheckedCreateNestedManyWithoutUserInput
   questionnaireAnswers?: Prisma.QuestionnaireAnswerUncheckedCreateNestedOneWithoutUserInput
 }
@@ -696,6 +723,7 @@ export type UserUpdateWithoutChatConversationsInput = {
   completedOnboarding?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkIns?: Prisma.CheckInUpdateManyWithoutUserNestedInput
   journalEntries?: Prisma.JournalEntryUpdateManyWithoutUserNestedInput
+  journalReflections?: Prisma.JournalReflectionUpdateManyWithoutUserNestedInput
   assessmentResults?: Prisma.AssessmentResultUpdateManyWithoutUserNestedInput
   questionnaireAnswers?: Prisma.QuestionnaireAnswerUpdateOneWithoutUserNestedInput
 }
@@ -713,6 +741,7 @@ export type UserUncheckedUpdateWithoutChatConversationsInput = {
   completedOnboarding?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkIns?: Prisma.CheckInUncheckedUpdateManyWithoutUserNestedInput
   journalEntries?: Prisma.JournalEntryUncheckedUpdateManyWithoutUserNestedInput
+  journalReflections?: Prisma.JournalReflectionUncheckedUpdateManyWithoutUserNestedInput
   assessmentResults?: Prisma.AssessmentResultUncheckedUpdateManyWithoutUserNestedInput
   questionnaireAnswers?: Prisma.QuestionnaireAnswerUncheckedUpdateOneWithoutUserNestedInput
 }
@@ -729,6 +758,7 @@ export type UserCreateWithoutCheckInsInput = {
   createdAt?: Date | string
   completedOnboarding?: boolean
   journalEntries?: Prisma.JournalEntryCreateNestedManyWithoutUserInput
+  journalReflections?: Prisma.JournalReflectionCreateNestedManyWithoutUserInput
   assessmentResults?: Prisma.AssessmentResultCreateNestedManyWithoutUserInput
   chatConversations?: Prisma.ChatConversationCreateNestedManyWithoutUserInput
   questionnaireAnswers?: Prisma.QuestionnaireAnswerCreateNestedOneWithoutUserInput
@@ -746,6 +776,7 @@ export type UserUncheckedCreateWithoutCheckInsInput = {
   createdAt?: Date | string
   completedOnboarding?: boolean
   journalEntries?: Prisma.JournalEntryUncheckedCreateNestedManyWithoutUserInput
+  journalReflections?: Prisma.JournalReflectionUncheckedCreateNestedManyWithoutUserInput
   assessmentResults?: Prisma.AssessmentResultUncheckedCreateNestedManyWithoutUserInput
   chatConversations?: Prisma.ChatConversationUncheckedCreateNestedManyWithoutUserInput
   questionnaireAnswers?: Prisma.QuestionnaireAnswerUncheckedCreateNestedOneWithoutUserInput
@@ -779,6 +810,7 @@ export type UserUpdateWithoutCheckInsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedOnboarding?: Prisma.BoolFieldUpdateOperationsInput | boolean
   journalEntries?: Prisma.JournalEntryUpdateManyWithoutUserNestedInput
+  journalReflections?: Prisma.JournalReflectionUpdateManyWithoutUserNestedInput
   assessmentResults?: Prisma.AssessmentResultUpdateManyWithoutUserNestedInput
   chatConversations?: Prisma.ChatConversationUpdateManyWithoutUserNestedInput
   questionnaireAnswers?: Prisma.QuestionnaireAnswerUpdateOneWithoutUserNestedInput
@@ -796,6 +828,7 @@ export type UserUncheckedUpdateWithoutCheckInsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedOnboarding?: Prisma.BoolFieldUpdateOperationsInput | boolean
   journalEntries?: Prisma.JournalEntryUncheckedUpdateManyWithoutUserNestedInput
+  journalReflections?: Prisma.JournalReflectionUncheckedUpdateManyWithoutUserNestedInput
   assessmentResults?: Prisma.AssessmentResultUncheckedUpdateManyWithoutUserNestedInput
   chatConversations?: Prisma.ChatConversationUncheckedUpdateManyWithoutUserNestedInput
   questionnaireAnswers?: Prisma.QuestionnaireAnswerUncheckedUpdateOneWithoutUserNestedInput
@@ -814,6 +847,7 @@ export type UserCreateWithoutAssessmentResultsInput = {
   completedOnboarding?: boolean
   checkIns?: Prisma.CheckInCreateNestedManyWithoutUserInput
   journalEntries?: Prisma.JournalEntryCreateNestedManyWithoutUserInput
+  journalReflections?: Prisma.JournalReflectionCreateNestedManyWithoutUserInput
   chatConversations?: Prisma.ChatConversationCreateNestedManyWithoutUserInput
   questionnaireAnswers?: Prisma.QuestionnaireAnswerCreateNestedOneWithoutUserInput
 }
@@ -831,6 +865,7 @@ export type UserUncheckedCreateWithoutAssessmentResultsInput = {
   completedOnboarding?: boolean
   checkIns?: Prisma.CheckInUncheckedCreateNestedManyWithoutUserInput
   journalEntries?: Prisma.JournalEntryUncheckedCreateNestedManyWithoutUserInput
+  journalReflections?: Prisma.JournalReflectionUncheckedCreateNestedManyWithoutUserInput
   chatConversations?: Prisma.ChatConversationUncheckedCreateNestedManyWithoutUserInput
   questionnaireAnswers?: Prisma.QuestionnaireAnswerUncheckedCreateNestedOneWithoutUserInput
 }
@@ -864,6 +899,7 @@ export type UserUpdateWithoutAssessmentResultsInput = {
   completedOnboarding?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkIns?: Prisma.CheckInUpdateManyWithoutUserNestedInput
   journalEntries?: Prisma.JournalEntryUpdateManyWithoutUserNestedInput
+  journalReflections?: Prisma.JournalReflectionUpdateManyWithoutUserNestedInput
   chatConversations?: Prisma.ChatConversationUpdateManyWithoutUserNestedInput
   questionnaireAnswers?: Prisma.QuestionnaireAnswerUpdateOneWithoutUserNestedInput
 }
@@ -881,6 +917,95 @@ export type UserUncheckedUpdateWithoutAssessmentResultsInput = {
   completedOnboarding?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkIns?: Prisma.CheckInUncheckedUpdateManyWithoutUserNestedInput
   journalEntries?: Prisma.JournalEntryUncheckedUpdateManyWithoutUserNestedInput
+  journalReflections?: Prisma.JournalReflectionUncheckedUpdateManyWithoutUserNestedInput
+  chatConversations?: Prisma.ChatConversationUncheckedUpdateManyWithoutUserNestedInput
+  questionnaireAnswers?: Prisma.QuestionnaireAnswerUncheckedUpdateOneWithoutUserNestedInput
+}
+
+export type UserCreateWithoutJournalReflectionsInput = {
+  id?: string
+  email: string
+  password?: string | null
+  firstname?: string | null
+  lastname?: string | null
+  role?: $Enums.Role
+  googleId?: string | null
+  provider?: $Enums.AuthProvider
+  createdAt?: Date | string
+  completedOnboarding?: boolean
+  checkIns?: Prisma.CheckInCreateNestedManyWithoutUserInput
+  journalEntries?: Prisma.JournalEntryCreateNestedManyWithoutUserInput
+  assessmentResults?: Prisma.AssessmentResultCreateNestedManyWithoutUserInput
+  chatConversations?: Prisma.ChatConversationCreateNestedManyWithoutUserInput
+  questionnaireAnswers?: Prisma.QuestionnaireAnswerCreateNestedOneWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutJournalReflectionsInput = {
+  id?: string
+  email: string
+  password?: string | null
+  firstname?: string | null
+  lastname?: string | null
+  role?: $Enums.Role
+  googleId?: string | null
+  provider?: $Enums.AuthProvider
+  createdAt?: Date | string
+  completedOnboarding?: boolean
+  checkIns?: Prisma.CheckInUncheckedCreateNestedManyWithoutUserInput
+  journalEntries?: Prisma.JournalEntryUncheckedCreateNestedManyWithoutUserInput
+  assessmentResults?: Prisma.AssessmentResultUncheckedCreateNestedManyWithoutUserInput
+  chatConversations?: Prisma.ChatConversationUncheckedCreateNestedManyWithoutUserInput
+  questionnaireAnswers?: Prisma.QuestionnaireAnswerUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutJournalReflectionsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutJournalReflectionsInput, Prisma.UserUncheckedCreateWithoutJournalReflectionsInput>
+}
+
+export type UserUpsertWithoutJournalReflectionsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutJournalReflectionsInput, Prisma.UserUncheckedUpdateWithoutJournalReflectionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutJournalReflectionsInput, Prisma.UserUncheckedCreateWithoutJournalReflectionsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutJournalReflectionsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutJournalReflectionsInput, Prisma.UserUncheckedUpdateWithoutJournalReflectionsInput>
+}
+
+export type UserUpdateWithoutJournalReflectionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedOnboarding?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  checkIns?: Prisma.CheckInUpdateManyWithoutUserNestedInput
+  journalEntries?: Prisma.JournalEntryUpdateManyWithoutUserNestedInput
+  assessmentResults?: Prisma.AssessmentResultUpdateManyWithoutUserNestedInput
+  chatConversations?: Prisma.ChatConversationUpdateManyWithoutUserNestedInput
+  questionnaireAnswers?: Prisma.QuestionnaireAnswerUpdateOneWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutJournalReflectionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedOnboarding?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  checkIns?: Prisma.CheckInUncheckedUpdateManyWithoutUserNestedInput
+  journalEntries?: Prisma.JournalEntryUncheckedUpdateManyWithoutUserNestedInput
+  assessmentResults?: Prisma.AssessmentResultUncheckedUpdateManyWithoutUserNestedInput
   chatConversations?: Prisma.ChatConversationUncheckedUpdateManyWithoutUserNestedInput
   questionnaireAnswers?: Prisma.QuestionnaireAnswerUncheckedUpdateOneWithoutUserNestedInput
 }
@@ -897,6 +1022,7 @@ export type UserCreateWithoutJournalEntriesInput = {
   createdAt?: Date | string
   completedOnboarding?: boolean
   checkIns?: Prisma.CheckInCreateNestedManyWithoutUserInput
+  journalReflections?: Prisma.JournalReflectionCreateNestedManyWithoutUserInput
   assessmentResults?: Prisma.AssessmentResultCreateNestedManyWithoutUserInput
   chatConversations?: Prisma.ChatConversationCreateNestedManyWithoutUserInput
   questionnaireAnswers?: Prisma.QuestionnaireAnswerCreateNestedOneWithoutUserInput
@@ -914,6 +1040,7 @@ export type UserUncheckedCreateWithoutJournalEntriesInput = {
   createdAt?: Date | string
   completedOnboarding?: boolean
   checkIns?: Prisma.CheckInUncheckedCreateNestedManyWithoutUserInput
+  journalReflections?: Prisma.JournalReflectionUncheckedCreateNestedManyWithoutUserInput
   assessmentResults?: Prisma.AssessmentResultUncheckedCreateNestedManyWithoutUserInput
   chatConversations?: Prisma.ChatConversationUncheckedCreateNestedManyWithoutUserInput
   questionnaireAnswers?: Prisma.QuestionnaireAnswerUncheckedCreateNestedOneWithoutUserInput
@@ -947,6 +1074,7 @@ export type UserUpdateWithoutJournalEntriesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedOnboarding?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkIns?: Prisma.CheckInUpdateManyWithoutUserNestedInput
+  journalReflections?: Prisma.JournalReflectionUpdateManyWithoutUserNestedInput
   assessmentResults?: Prisma.AssessmentResultUpdateManyWithoutUserNestedInput
   chatConversations?: Prisma.ChatConversationUpdateManyWithoutUserNestedInput
   questionnaireAnswers?: Prisma.QuestionnaireAnswerUpdateOneWithoutUserNestedInput
@@ -964,6 +1092,7 @@ export type UserUncheckedUpdateWithoutJournalEntriesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedOnboarding?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkIns?: Prisma.CheckInUncheckedUpdateManyWithoutUserNestedInput
+  journalReflections?: Prisma.JournalReflectionUncheckedUpdateManyWithoutUserNestedInput
   assessmentResults?: Prisma.AssessmentResultUncheckedUpdateManyWithoutUserNestedInput
   chatConversations?: Prisma.ChatConversationUncheckedUpdateManyWithoutUserNestedInput
   questionnaireAnswers?: Prisma.QuestionnaireAnswerUncheckedUpdateOneWithoutUserNestedInput
@@ -977,6 +1106,7 @@ export type UserUncheckedUpdateWithoutJournalEntriesInput = {
 export type UserCountOutputType = {
   checkIns: number
   journalEntries: number
+  journalReflections: number
   assessmentResults: number
   chatConversations: number
 }
@@ -984,6 +1114,7 @@ export type UserCountOutputType = {
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   checkIns?: boolean | UserCountOutputTypeCountCheckInsArgs
   journalEntries?: boolean | UserCountOutputTypeCountJournalEntriesArgs
+  journalReflections?: boolean | UserCountOutputTypeCountJournalReflectionsArgs
   assessmentResults?: boolean | UserCountOutputTypeCountAssessmentResultsArgs
   chatConversations?: boolean | UserCountOutputTypeCountChatConversationsArgs
 }
@@ -1015,6 +1146,13 @@ export type UserCountOutputTypeCountJournalEntriesArgs<ExtArgs extends runtime.T
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountJournalReflectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.JournalReflectionWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountAssessmentResultsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.AssessmentResultWhereInput
 }
@@ -1040,6 +1178,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   completedOnboarding?: boolean
   checkIns?: boolean | Prisma.User$checkInsArgs<ExtArgs>
   journalEntries?: boolean | Prisma.User$journalEntriesArgs<ExtArgs>
+  journalReflections?: boolean | Prisma.User$journalReflectionsArgs<ExtArgs>
   assessmentResults?: boolean | Prisma.User$assessmentResultsArgs<ExtArgs>
   chatConversations?: boolean | Prisma.User$chatConversationsArgs<ExtArgs>
   questionnaireAnswers?: boolean | Prisma.User$questionnaireAnswersArgs<ExtArgs>
@@ -1089,6 +1228,7 @@ export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   checkIns?: boolean | Prisma.User$checkInsArgs<ExtArgs>
   journalEntries?: boolean | Prisma.User$journalEntriesArgs<ExtArgs>
+  journalReflections?: boolean | Prisma.User$journalReflectionsArgs<ExtArgs>
   assessmentResults?: boolean | Prisma.User$assessmentResultsArgs<ExtArgs>
   chatConversations?: boolean | Prisma.User$chatConversationsArgs<ExtArgs>
   questionnaireAnswers?: boolean | Prisma.User$questionnaireAnswersArgs<ExtArgs>
@@ -1102,6 +1242,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     checkIns: Prisma.$CheckInPayload<ExtArgs>[]
     journalEntries: Prisma.$JournalEntryPayload<ExtArgs>[]
+    journalReflections: Prisma.$JournalReflectionPayload<ExtArgs>[]
     assessmentResults: Prisma.$AssessmentResultPayload<ExtArgs>[]
     chatConversations: Prisma.$ChatConversationPayload<ExtArgs>[]
     questionnaireAnswers: Prisma.$QuestionnaireAnswerPayload<ExtArgs> | null
@@ -1513,6 +1654,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   checkIns<T extends Prisma.User$checkInsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$checkInsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CheckInPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   journalEntries<T extends Prisma.User$journalEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$journalEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JournalEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  journalReflections<T extends Prisma.User$journalReflectionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$journalReflectionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JournalReflectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   assessmentResults<T extends Prisma.User$assessmentResultsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$assessmentResultsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AssessmentResultPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   chatConversations<T extends Prisma.User$chatConversationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$chatConversationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChatConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   questionnaireAnswers<T extends Prisma.User$questionnaireAnswersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$questionnaireAnswersArgs<ExtArgs>>): Prisma.Prisma__QuestionnaireAnswerClient<runtime.Types.Result.GetResult<Prisma.$QuestionnaireAnswerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -1988,6 +2130,30 @@ export type User$journalEntriesArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.JournalEntryScalarFieldEnum | Prisma.JournalEntryScalarFieldEnum[]
+}
+
+/**
+ * User.journalReflections
+ */
+export type User$journalReflectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the JournalReflection
+   */
+  select?: Prisma.JournalReflectionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the JournalReflection
+   */
+  omit?: Prisma.JournalReflectionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.JournalReflectionInclude<ExtArgs> | null
+  where?: Prisma.JournalReflectionWhereInput
+  orderBy?: Prisma.JournalReflectionOrderByWithRelationInput | Prisma.JournalReflectionOrderByWithRelationInput[]
+  cursor?: Prisma.JournalReflectionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.JournalReflectionScalarFieldEnum | Prisma.JournalReflectionScalarFieldEnum[]
 }
 
 /**

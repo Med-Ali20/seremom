@@ -78,6 +78,11 @@ export type AssessmentCategory = Prisma.AssessmentCategoryModel
  */
 export type AssessmentResult = Prisma.AssessmentResultModel
 /**
+ * Model JournalReflection
+ * 
+ */
+export type JournalReflection = Prisma.JournalReflectionModel
+/**
  * Model JournalEntry
  * 
  */

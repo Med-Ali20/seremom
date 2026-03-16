@@ -27,18 +27,21 @@ export type AggregateAssessmentCategory = {
 export type AssessmentCategoryMinAggregateOutputType = {
   id: string | null
   name: string | null
+  icon: string | null
   createdAt: Date | null
 }
 
 export type AssessmentCategoryMaxAggregateOutputType = {
   id: string | null
   name: string | null
+  icon: string | null
   createdAt: Date | null
 }
 
 export type AssessmentCategoryCountAggregateOutputType = {
   id: number
   name: number
+  icon: number
   createdAt: number
   _all: number
 }
@@ -47,18 +50,21 @@ export type AssessmentCategoryCountAggregateOutputType = {
 export type AssessmentCategoryMinAggregateInputType = {
   id?: true
   name?: true
+  icon?: true
   createdAt?: true
 }
 
 export type AssessmentCategoryMaxAggregateInputType = {
   id?: true
   name?: true
+  icon?: true
   createdAt?: true
 }
 
 export type AssessmentCategoryCountAggregateInputType = {
   id?: true
   name?: true
+  icon?: true
   createdAt?: true
   _all?: true
 }
@@ -138,6 +144,7 @@ export type AssessmentCategoryGroupByArgs<ExtArgs extends runtime.Types.Extensio
 export type AssessmentCategoryGroupByOutputType = {
   id: string
   name: string
+  icon: string | null
   createdAt: Date
   _count: AssessmentCategoryCountAggregateOutputType | null
   _min: AssessmentCategoryMinAggregateOutputType | null
@@ -165,6 +172,7 @@ export type AssessmentCategoryWhereInput = {
   NOT?: Prisma.AssessmentCategoryWhereInput | Prisma.AssessmentCategoryWhereInput[]
   id?: Prisma.StringFilter<"AssessmentCategory"> | string
   name?: Prisma.StringFilter<"AssessmentCategory"> | string
+  icon?: Prisma.StringNullableFilter<"AssessmentCategory"> | string | null
   createdAt?: Prisma.DateTimeFilter<"AssessmentCategory"> | Date | string
   assessments?: Prisma.AssessmentListRelationFilter
 }
@@ -172,6 +180,7 @@ export type AssessmentCategoryWhereInput = {
 export type AssessmentCategoryOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  icon?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   assessments?: Prisma.AssessmentOrderByRelationAggregateInput
 }
@@ -182,6 +191,7 @@ export type AssessmentCategoryWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.AssessmentCategoryWhereInput | Prisma.AssessmentCategoryWhereInput[]
   OR?: Prisma.AssessmentCategoryWhereInput[]
   NOT?: Prisma.AssessmentCategoryWhereInput | Prisma.AssessmentCategoryWhereInput[]
+  icon?: Prisma.StringNullableFilter<"AssessmentCategory"> | string | null
   createdAt?: Prisma.DateTimeFilter<"AssessmentCategory"> | Date | string
   assessments?: Prisma.AssessmentListRelationFilter
 }, "id" | "name">
@@ -189,6 +199,7 @@ export type AssessmentCategoryWhereUniqueInput = Prisma.AtLeast<{
 export type AssessmentCategoryOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  icon?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.AssessmentCategoryCountOrderByAggregateInput
   _max?: Prisma.AssessmentCategoryMaxOrderByAggregateInput
@@ -201,12 +212,14 @@ export type AssessmentCategoryScalarWhereWithAggregatesInput = {
   NOT?: Prisma.AssessmentCategoryScalarWhereWithAggregatesInput | Prisma.AssessmentCategoryScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"AssessmentCategory"> | string
   name?: Prisma.StringWithAggregatesFilter<"AssessmentCategory"> | string
+  icon?: Prisma.StringNullableWithAggregatesFilter<"AssessmentCategory"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"AssessmentCategory"> | Date | string
 }
 
 export type AssessmentCategoryCreateInput = {
   id?: string
   name: string
+  icon?: string | null
   createdAt?: Date | string
   assessments?: Prisma.AssessmentCreateNestedManyWithoutCategoryInput
 }
@@ -214,6 +227,7 @@ export type AssessmentCategoryCreateInput = {
 export type AssessmentCategoryUncheckedCreateInput = {
   id?: string
   name: string
+  icon?: string | null
   createdAt?: Date | string
   assessments?: Prisma.AssessmentUncheckedCreateNestedManyWithoutCategoryInput
 }
@@ -221,6 +235,7 @@ export type AssessmentCategoryUncheckedCreateInput = {
 export type AssessmentCategoryUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assessments?: Prisma.AssessmentUpdateManyWithoutCategoryNestedInput
 }
@@ -228,6 +243,7 @@ export type AssessmentCategoryUpdateInput = {
 export type AssessmentCategoryUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assessments?: Prisma.AssessmentUncheckedUpdateManyWithoutCategoryNestedInput
 }
@@ -235,18 +251,21 @@ export type AssessmentCategoryUncheckedUpdateInput = {
 export type AssessmentCategoryCreateManyInput = {
   id?: string
   name: string
+  icon?: string | null
   createdAt?: Date | string
 }
 
 export type AssessmentCategoryUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AssessmentCategoryUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -258,18 +277,21 @@ export type AssessmentCategoryNullableScalarRelationFilter = {
 export type AssessmentCategoryCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  icon?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
 export type AssessmentCategoryMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  icon?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
 export type AssessmentCategoryMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  icon?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -292,12 +314,14 @@ export type AssessmentCategoryUpdateOneWithoutAssessmentsNestedInput = {
 export type AssessmentCategoryCreateWithoutAssessmentsInput = {
   id?: string
   name: string
+  icon?: string | null
   createdAt?: Date | string
 }
 
 export type AssessmentCategoryUncheckedCreateWithoutAssessmentsInput = {
   id?: string
   name: string
+  icon?: string | null
   createdAt?: Date | string
 }
 
@@ -320,12 +344,14 @@ export type AssessmentCategoryUpdateToOneWithWhereWithoutAssessmentsInput = {
 export type AssessmentCategoryUpdateWithoutAssessmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AssessmentCategoryUncheckedUpdateWithoutAssessmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -363,6 +389,7 @@ export type AssessmentCategoryCountOutputTypeCountAssessmentsArgs<ExtArgs extend
 export type AssessmentCategorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  icon?: boolean
   createdAt?: boolean
   assessments?: boolean | Prisma.AssessmentCategory$assessmentsArgs<ExtArgs>
   _count?: boolean | Prisma.AssessmentCategoryCountOutputTypeDefaultArgs<ExtArgs>
@@ -371,22 +398,25 @@ export type AssessmentCategorySelect<ExtArgs extends runtime.Types.Extensions.In
 export type AssessmentCategorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  icon?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["assessmentCategory"]>
 
 export type AssessmentCategorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  icon?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["assessmentCategory"]>
 
 export type AssessmentCategorySelectScalar = {
   id?: boolean
   name?: boolean
+  icon?: boolean
   createdAt?: boolean
 }
 
-export type AssessmentCategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "createdAt", ExtArgs["result"]["assessmentCategory"]>
+export type AssessmentCategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "icon" | "createdAt", ExtArgs["result"]["assessmentCategory"]>
 export type AssessmentCategoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   assessments?: boolean | Prisma.AssessmentCategory$assessmentsArgs<ExtArgs>
   _count?: boolean | Prisma.AssessmentCategoryCountOutputTypeDefaultArgs<ExtArgs>
@@ -402,6 +432,7 @@ export type $AssessmentCategoryPayload<ExtArgs extends runtime.Types.Extensions.
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
+    icon: string | null
     createdAt: Date
   }, ExtArgs["result"]["assessmentCategory"]>
   composites: {}
@@ -829,6 +860,7 @@ export interface Prisma__AssessmentCategoryClient<T, Null = never, ExtArgs exten
 export interface AssessmentCategoryFieldRefs {
   readonly id: Prisma.FieldRef<"AssessmentCategory", 'String'>
   readonly name: Prisma.FieldRef<"AssessmentCategory", 'String'>
+  readonly icon: Prisma.FieldRef<"AssessmentCategory", 'String'>
   readonly createdAt: Prisma.FieldRef<"AssessmentCategory", 'DateTime'>
 }
     

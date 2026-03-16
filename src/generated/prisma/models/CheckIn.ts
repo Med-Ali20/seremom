@@ -43,6 +43,7 @@ export type CheckInSumAggregateOutputType = {
 export type CheckInMinAggregateOutputType = {
   id: string | null
   date: Date | null
+  slot: $Enums.CheckInSlot | null
   stress: number | null
   mood: number | null
   energy: number | null
@@ -55,6 +56,7 @@ export type CheckInMinAggregateOutputType = {
 export type CheckInMaxAggregateOutputType = {
   id: string | null
   date: Date | null
+  slot: $Enums.CheckInSlot | null
   stress: number | null
   mood: number | null
   energy: number | null
@@ -67,6 +69,7 @@ export type CheckInMaxAggregateOutputType = {
 export type CheckInCountAggregateOutputType = {
   id: number
   date: number
+  slot: number
   stress: number
   mood: number
   energy: number
@@ -95,6 +98,7 @@ export type CheckInSumAggregateInputType = {
 export type CheckInMinAggregateInputType = {
   id?: true
   date?: true
+  slot?: true
   stress?: true
   mood?: true
   energy?: true
@@ -107,6 +111,7 @@ export type CheckInMinAggregateInputType = {
 export type CheckInMaxAggregateInputType = {
   id?: true
   date?: true
+  slot?: true
   stress?: true
   mood?: true
   energy?: true
@@ -119,6 +124,7 @@ export type CheckInMaxAggregateInputType = {
 export type CheckInCountAggregateInputType = {
   id?: true
   date?: true
+  slot?: true
   stress?: true
   mood?: true
   energy?: true
@@ -218,6 +224,7 @@ export type CheckInGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 export type CheckInGroupByOutputType = {
   id: string
   date: Date
+  slot: $Enums.CheckInSlot
   stress: number
   mood: number
   energy: number
@@ -253,6 +260,7 @@ export type CheckInWhereInput = {
   NOT?: Prisma.CheckInWhereInput | Prisma.CheckInWhereInput[]
   id?: Prisma.StringFilter<"CheckIn"> | string
   date?: Prisma.DateTimeFilter<"CheckIn"> | Date | string
+  slot?: Prisma.EnumCheckInSlotFilter<"CheckIn"> | $Enums.CheckInSlot
   stress?: Prisma.IntFilter<"CheckIn"> | number
   mood?: Prisma.IntFilter<"CheckIn"> | number
   energy?: Prisma.IntFilter<"CheckIn"> | number
@@ -266,6 +274,7 @@ export type CheckInWhereInput = {
 export type CheckInOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   date?: Prisma.SortOrder
+  slot?: Prisma.SortOrder
   stress?: Prisma.SortOrder
   mood?: Prisma.SortOrder
   energy?: Prisma.SortOrder
@@ -278,11 +287,12 @@ export type CheckInOrderByWithRelationInput = {
 
 export type CheckInWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  userId_date?: Prisma.CheckInUserIdDateCompoundUniqueInput
+  userId_date_slot?: Prisma.CheckInUserIdDateSlotCompoundUniqueInput
   AND?: Prisma.CheckInWhereInput | Prisma.CheckInWhereInput[]
   OR?: Prisma.CheckInWhereInput[]
   NOT?: Prisma.CheckInWhereInput | Prisma.CheckInWhereInput[]
   date?: Prisma.DateTimeFilter<"CheckIn"> | Date | string
+  slot?: Prisma.EnumCheckInSlotFilter<"CheckIn"> | $Enums.CheckInSlot
   stress?: Prisma.IntFilter<"CheckIn"> | number
   mood?: Prisma.IntFilter<"CheckIn"> | number
   energy?: Prisma.IntFilter<"CheckIn"> | number
@@ -291,11 +301,12 @@ export type CheckInWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"CheckIn"> | Date | string
   userId?: Prisma.StringFilter<"CheckIn"> | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-}, "id" | "userId_date">
+}, "id" | "userId_date_slot">
 
 export type CheckInOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   date?: Prisma.SortOrder
+  slot?: Prisma.SortOrder
   stress?: Prisma.SortOrder
   mood?: Prisma.SortOrder
   energy?: Prisma.SortOrder
@@ -316,6 +327,7 @@ export type CheckInScalarWhereWithAggregatesInput = {
   NOT?: Prisma.CheckInScalarWhereWithAggregatesInput | Prisma.CheckInScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"CheckIn"> | string
   date?: Prisma.DateTimeWithAggregatesFilter<"CheckIn"> | Date | string
+  slot?: Prisma.EnumCheckInSlotWithAggregatesFilter<"CheckIn"> | $Enums.CheckInSlot
   stress?: Prisma.IntWithAggregatesFilter<"CheckIn"> | number
   mood?: Prisma.IntWithAggregatesFilter<"CheckIn"> | number
   energy?: Prisma.IntWithAggregatesFilter<"CheckIn"> | number
@@ -328,6 +340,7 @@ export type CheckInScalarWhereWithAggregatesInput = {
 export type CheckInCreateInput = {
   id?: string
   date: Date | string
+  slot?: $Enums.CheckInSlot
   stress: number
   mood: number
   energy: number
@@ -340,6 +353,7 @@ export type CheckInCreateInput = {
 export type CheckInUncheckedCreateInput = {
   id?: string
   date: Date | string
+  slot?: $Enums.CheckInSlot
   stress: number
   mood: number
   energy: number
@@ -352,6 +366,7 @@ export type CheckInUncheckedCreateInput = {
 export type CheckInUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slot?: Prisma.EnumCheckInSlotFieldUpdateOperationsInput | $Enums.CheckInSlot
   stress?: Prisma.IntFieldUpdateOperationsInput | number
   mood?: Prisma.IntFieldUpdateOperationsInput | number
   energy?: Prisma.IntFieldUpdateOperationsInput | number
@@ -364,6 +379,7 @@ export type CheckInUpdateInput = {
 export type CheckInUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slot?: Prisma.EnumCheckInSlotFieldUpdateOperationsInput | $Enums.CheckInSlot
   stress?: Prisma.IntFieldUpdateOperationsInput | number
   mood?: Prisma.IntFieldUpdateOperationsInput | number
   energy?: Prisma.IntFieldUpdateOperationsInput | number
@@ -376,6 +392,7 @@ export type CheckInUncheckedUpdateInput = {
 export type CheckInCreateManyInput = {
   id?: string
   date: Date | string
+  slot?: $Enums.CheckInSlot
   stress: number
   mood: number
   energy: number
@@ -388,6 +405,7 @@ export type CheckInCreateManyInput = {
 export type CheckInUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slot?: Prisma.EnumCheckInSlotFieldUpdateOperationsInput | $Enums.CheckInSlot
   stress?: Prisma.IntFieldUpdateOperationsInput | number
   mood?: Prisma.IntFieldUpdateOperationsInput | number
   energy?: Prisma.IntFieldUpdateOperationsInput | number
@@ -399,6 +417,7 @@ export type CheckInUpdateManyMutationInput = {
 export type CheckInUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slot?: Prisma.EnumCheckInSlotFieldUpdateOperationsInput | $Enums.CheckInSlot
   stress?: Prisma.IntFieldUpdateOperationsInput | number
   mood?: Prisma.IntFieldUpdateOperationsInput | number
   energy?: Prisma.IntFieldUpdateOperationsInput | number
@@ -418,14 +437,16 @@ export type CheckInOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type CheckInUserIdDateCompoundUniqueInput = {
+export type CheckInUserIdDateSlotCompoundUniqueInput = {
   userId: string
   date: Date | string
+  slot: $Enums.CheckInSlot
 }
 
 export type CheckInCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   date?: Prisma.SortOrder
+  slot?: Prisma.SortOrder
   stress?: Prisma.SortOrder
   mood?: Prisma.SortOrder
   energy?: Prisma.SortOrder
@@ -445,6 +466,7 @@ export type CheckInAvgOrderByAggregateInput = {
 export type CheckInMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   date?: Prisma.SortOrder
+  slot?: Prisma.SortOrder
   stress?: Prisma.SortOrder
   mood?: Prisma.SortOrder
   energy?: Prisma.SortOrder
@@ -457,6 +479,7 @@ export type CheckInMaxOrderByAggregateInput = {
 export type CheckInMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   date?: Prisma.SortOrder
+  slot?: Prisma.SortOrder
   stress?: Prisma.SortOrder
   mood?: Prisma.SortOrder
   energy?: Prisma.SortOrder
@@ -515,6 +538,10 @@ export type CheckInUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.CheckInScalarWhereInput | Prisma.CheckInScalarWhereInput[]
 }
 
+export type EnumCheckInSlotFieldUpdateOperationsInput = {
+  set?: $Enums.CheckInSlot
+}
+
 export type IntFieldUpdateOperationsInput = {
   set?: number
   increment?: number
@@ -526,6 +553,7 @@ export type IntFieldUpdateOperationsInput = {
 export type CheckInCreateWithoutUserInput = {
   id?: string
   date: Date | string
+  slot?: $Enums.CheckInSlot
   stress: number
   mood: number
   energy: number
@@ -537,6 +565,7 @@ export type CheckInCreateWithoutUserInput = {
 export type CheckInUncheckedCreateWithoutUserInput = {
   id?: string
   date: Date | string
+  slot?: $Enums.CheckInSlot
   stress: number
   mood: number
   energy: number
@@ -577,6 +606,7 @@ export type CheckInScalarWhereInput = {
   NOT?: Prisma.CheckInScalarWhereInput | Prisma.CheckInScalarWhereInput[]
   id?: Prisma.StringFilter<"CheckIn"> | string
   date?: Prisma.DateTimeFilter<"CheckIn"> | Date | string
+  slot?: Prisma.EnumCheckInSlotFilter<"CheckIn"> | $Enums.CheckInSlot
   stress?: Prisma.IntFilter<"CheckIn"> | number
   mood?: Prisma.IntFilter<"CheckIn"> | number
   energy?: Prisma.IntFilter<"CheckIn"> | number
@@ -589,6 +619,7 @@ export type CheckInScalarWhereInput = {
 export type CheckInCreateManyUserInput = {
   id?: string
   date: Date | string
+  slot?: $Enums.CheckInSlot
   stress: number
   mood: number
   energy: number
@@ -600,6 +631,7 @@ export type CheckInCreateManyUserInput = {
 export type CheckInUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slot?: Prisma.EnumCheckInSlotFieldUpdateOperationsInput | $Enums.CheckInSlot
   stress?: Prisma.IntFieldUpdateOperationsInput | number
   mood?: Prisma.IntFieldUpdateOperationsInput | number
   energy?: Prisma.IntFieldUpdateOperationsInput | number
@@ -611,6 +643,7 @@ export type CheckInUpdateWithoutUserInput = {
 export type CheckInUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slot?: Prisma.EnumCheckInSlotFieldUpdateOperationsInput | $Enums.CheckInSlot
   stress?: Prisma.IntFieldUpdateOperationsInput | number
   mood?: Prisma.IntFieldUpdateOperationsInput | number
   energy?: Prisma.IntFieldUpdateOperationsInput | number
@@ -622,6 +655,7 @@ export type CheckInUncheckedUpdateWithoutUserInput = {
 export type CheckInUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slot?: Prisma.EnumCheckInSlotFieldUpdateOperationsInput | $Enums.CheckInSlot
   stress?: Prisma.IntFieldUpdateOperationsInput | number
   mood?: Prisma.IntFieldUpdateOperationsInput | number
   energy?: Prisma.IntFieldUpdateOperationsInput | number
@@ -635,6 +669,7 @@ export type CheckInUncheckedUpdateManyWithoutUserInput = {
 export type CheckInSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   date?: boolean
+  slot?: boolean
   stress?: boolean
   mood?: boolean
   energy?: boolean
@@ -648,6 +683,7 @@ export type CheckInSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 export type CheckInSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   date?: boolean
+  slot?: boolean
   stress?: boolean
   mood?: boolean
   energy?: boolean
@@ -661,6 +697,7 @@ export type CheckInSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
 export type CheckInSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   date?: boolean
+  slot?: boolean
   stress?: boolean
   mood?: boolean
   energy?: boolean
@@ -674,6 +711,7 @@ export type CheckInSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
 export type CheckInSelectScalar = {
   id?: boolean
   date?: boolean
+  slot?: boolean
   stress?: boolean
   mood?: boolean
   energy?: boolean
@@ -683,7 +721,7 @@ export type CheckInSelectScalar = {
   userId?: boolean
 }
 
-export type CheckInOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "date" | "stress" | "mood" | "energy" | "sleep" | "notes" | "createdAt" | "userId", ExtArgs["result"]["checkIn"]>
+export type CheckInOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "date" | "slot" | "stress" | "mood" | "energy" | "sleep" | "notes" | "createdAt" | "userId", ExtArgs["result"]["checkIn"]>
 export type CheckInInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -702,6 +740,7 @@ export type $CheckInPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     date: Date
+    slot: $Enums.CheckInSlot
     stress: number
     mood: number
     energy: number
@@ -1135,6 +1174,7 @@ export interface Prisma__CheckInClient<T, Null = never, ExtArgs extends runtime.
 export interface CheckInFieldRefs {
   readonly id: Prisma.FieldRef<"CheckIn", 'String'>
   readonly date: Prisma.FieldRef<"CheckIn", 'DateTime'>
+  readonly slot: Prisma.FieldRef<"CheckIn", 'CheckInSlot'>
   readonly stress: Prisma.FieldRef<"CheckIn", 'Int'>
   readonly mood: Prisma.FieldRef<"CheckIn", 'Int'>
   readonly energy: Prisma.FieldRef<"CheckIn", 'Int'>

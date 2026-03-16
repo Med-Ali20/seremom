@@ -392,6 +392,7 @@ export const ModelName = {
   Assessment: 'Assessment',
   AssessmentCategory: 'AssessmentCategory',
   AssessmentResult: 'AssessmentResult',
+  JournalReflection: 'JournalReflection',
   JournalEntry: 'JournalEntry',
   Article: 'Article',
   ArticleCategory: 'ArticleCategory'
@@ -410,7 +411,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "questionnaireAnswer" | "chatConversation" | "chatMessage" | "checkIn" | "assessment" | "assessmentCategory" | "assessmentResult" | "journalEntry" | "article" | "articleCategory"
+    modelProps: "user" | "questionnaireAnswer" | "chatConversation" | "chatMessage" | "checkIn" | "assessment" | "assessmentCategory" | "assessmentResult" | "journalReflection" | "journalEntry" | "article" | "articleCategory"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1006,6 +1007,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    JournalReflection: {
+      payload: Prisma.$JournalReflectionPayload<ExtArgs>
+      fields: Prisma.JournalReflectionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.JournalReflectionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JournalReflectionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.JournalReflectionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JournalReflectionPayload>
+        }
+        findFirst: {
+          args: Prisma.JournalReflectionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JournalReflectionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.JournalReflectionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JournalReflectionPayload>
+        }
+        findMany: {
+          args: Prisma.JournalReflectionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JournalReflectionPayload>[]
+        }
+        create: {
+          args: Prisma.JournalReflectionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JournalReflectionPayload>
+        }
+        createMany: {
+          args: Prisma.JournalReflectionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.JournalReflectionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JournalReflectionPayload>[]
+        }
+        delete: {
+          args: Prisma.JournalReflectionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JournalReflectionPayload>
+        }
+        update: {
+          args: Prisma.JournalReflectionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JournalReflectionPayload>
+        }
+        deleteMany: {
+          args: Prisma.JournalReflectionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.JournalReflectionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.JournalReflectionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JournalReflectionPayload>[]
+        }
+        upsert: {
+          args: Prisma.JournalReflectionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JournalReflectionPayload>
+        }
+        aggregate: {
+          args: Prisma.JournalReflectionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateJournalReflection>
+        }
+        groupBy: {
+          args: Prisma.JournalReflectionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.JournalReflectionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.JournalReflectionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.JournalReflectionCountAggregateOutputType> | number
+        }
+      }
+    }
     JournalEntry: {
       payload: Prisma.$JournalEntryPayload<ExtArgs>
       fields: Prisma.JournalEntryFieldRefs
@@ -1321,6 +1396,7 @@ export type ChatMessageScalarFieldEnum = (typeof ChatMessageScalarFieldEnum)[key
 export const CheckInScalarFieldEnum = {
   id: 'id',
   date: 'date',
+  slot: 'slot',
   stress: 'stress',
   mood: 'mood',
   energy: 'energy',
@@ -1342,6 +1418,7 @@ export const AssessmentScalarFieldEnum = {
   categoryId: 'categoryId',
   questions: 'questions',
   diagnoses: 'diagnoses',
+  tags: 'tags',
   validated: 'validated',
   icon: 'icon',
   createdAt: 'createdAt'
@@ -1353,6 +1430,7 @@ export type AssessmentScalarFieldEnum = (typeof AssessmentScalarFieldEnum)[keyof
 export const AssessmentCategoryScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  icon: 'icon',
   createdAt: 'createdAt'
 } as const
 
@@ -1367,11 +1445,23 @@ export const AssessmentResultScalarFieldEnum = {
   totalScore: 'totalScore',
   topScore: 'topScore',
   diagnosis: 'diagnosis',
+  attempt: 'attempt',
   createdAt: 'createdAt',
   userId: 'userId'
 } as const
 
 export type AssessmentResultScalarFieldEnum = (typeof AssessmentResultScalarFieldEnum)[keyof typeof AssessmentResultScalarFieldEnum]
+
+
+export const JournalReflectionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  text: 'text',
+  date: 'date',
+  createdAt: 'createdAt'
+} as const
+
+export type JournalReflectionScalarFieldEnum = (typeof JournalReflectionScalarFieldEnum)[keyof typeof JournalReflectionScalarFieldEnum]
 
 
 export const JournalEntryScalarFieldEnum = {
@@ -1536,6 +1626,20 @@ export type ListEnumMessageRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$
 
 
 /**
+ * Reference to a field of type 'CheckInSlot'
+ */
+export type EnumCheckInSlotFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CheckInSlot'>
+    
+
+
+/**
+ * Reference to a field of type 'CheckInSlot[]'
+ */
+export type ListEnumCheckInSlotFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CheckInSlot[]'>
+    
+
+
+/**
  * Reference to a field of type 'Int'
  */
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -1679,6 +1783,7 @@ export type GlobalOmitConfig = {
   assessment?: Prisma.AssessmentOmit
   assessmentCategory?: Prisma.AssessmentCategoryOmit
   assessmentResult?: Prisma.AssessmentResultOmit
+  journalReflection?: Prisma.JournalReflectionOmit
   journalEntry?: Prisma.JournalEntryOmit
   article?: Prisma.ArticleOmit
   articleCategory?: Prisma.ArticleCategoryOmit

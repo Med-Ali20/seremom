@@ -57,6 +57,13 @@ export class ChatController {
     );
   }
 
+  // Returns today's reflection (cached) or generates a new one (costs 1 message).
+  @Get('journal-reflection')
+  @SkipThrottle()
+  getJournalReflection(@Req() req: any) {
+    return this.chatService.getJournalReflection(req.user.userId);
+  }
+
   @Patch('conversations/:conversationId')
   updateConversation(
     @Param('conversationId') conversationId: string,

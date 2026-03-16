@@ -6,24 +6,36 @@ import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../auth/enums/role.enum';
 
-@Controller('assessments/results')
+@Controller('assessment-results')
 @UseGuards(JwtAuthGuard)
 export class AssessmentsResultsController {
   constructor(private readonly service: AssessmentsResultsService) {}
 
-  // User submits their result
+  // Submit a result (creates new attempt, keeps history)
   @Post()
   create(@Body() dto: CreateAssessmentsResultDto, @Req() req: any) {
     return this.service.create(dto, req.user.userId);
   }
 
-  // User fetches their own results
+  // Latest result per assessment (used by dashboard + recommendations)
   @Get('me')
   getMyResults(@Req() req: any) {
+    return this.service.findLatestByUser(req.user.userId);
+  }
+
+  // Full attempt history for a specific assessment
+  @Get('me/history/:assessmentId')
+  getHistory(@Param('assessmentId') assessmentId: string, @Req() req: any) {
+    return this.service.findHistoryByAssessment(req.user.userId, assessmentId);
+  }
+
+  // All attempts across all assessments (for "See all results" page)
+  @Get('me/all')
+  getAllMyResults(@Req() req: any) {
     return this.service.findAllByUser(req.user.userId);
   }
 
-  // Admin fetches all results
+  // Admin
   @Get()
   @UseGuards(RolesGuard)
   @Roles(Role.ADMIN, Role.SUPERADMIN)
@@ -31,7 +43,6 @@ export class AssessmentsResultsController {
     return this.service.findAll();
   }
 
-  // Admin fetches single result
   @Get(':id')
   @UseGuards(RolesGuard)
   @Roles(Role.ADMIN, Role.SUPERADMIN)
@@ -39,7 +50,6 @@ export class AssessmentsResultsController {
     return this.service.findOne(id);
   }
 
-  // Admin deletes a result
   @Delete(':id')
   @UseGuards(RolesGuard)
   @Roles(Role.ADMIN, Role.SUPERADMIN)

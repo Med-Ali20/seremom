@@ -16,20 +16,36 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../auth/enums/role.enum';
-import { PrismaService } from '../prisma/prisma.service';
+import { QuestionnaireService } from '../questionnaire/questionnaire.service';
 
 @Controller('assessments')
 export class AssessmentsController {
   constructor(
     private readonly assessmentsService: AssessmentsService,
-    private readonly prisma: PrismaService,
+    private readonly questionnaireService: QuestionnaireService,
   ) {}
 
-  // ── Public ───────────────────────────────────────────────────────────────
+  // ── Public ────────────────────────────────────────────────────────────────
 
   @Get()
   findAll() {
     return this.assessmentsService.findAll();
+  }
+
+  @Get('by-category/:categoryId')
+  findByCategory(@Param('categoryId') categoryId: string) {
+    console.log('Finding assessments for category:', categoryId);
+    return this.assessmentsService.findByCategory(categoryId);
+  }
+
+  // ── Authenticated ─────────────────────────────────────────────────────────
+
+  // Returns recommended assessments based on the user's questionnaire tags
+  @Get('recommended')
+  @UseGuards(JwtAuthGuard)
+  async getRecommended(@Req() req: any) {
+    const tags = await this.questionnaireService.getUserTags(req.user.userId);
+    return this.assessmentsService.findRecommended(tags, 5);
   }
 
   @Get(':id')
@@ -37,7 +53,7 @@ export class AssessmentsController {
     return this.assessmentsService.findOne(id);
   }
 
-  // ── Admin only ───────────────────────────────────────────────────────────
+  // ── Admin only ────────────────────────────────────────────────────────────
 
   @Post()
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -59,38 +75,4 @@ export class AssessmentsController {
   remove(@Param('id') id: string) {
     return this.assessmentsService.remove(id);
   }
-
-  // @Post('results')
-  // @UseGuards(JwtAuthGuard)
-  // async submitResult(
-  //   @Body()
-  //   body: {
-  //     assessmentId: string;
-  //     assessmentTitle: string;
-  //     answers: any;
-  //     totalScore: number;
-  //     diagnosis: string;
-  //   },
-  //   @Req() req: any,
-  // ) {
-  //   return this.prisma.assessmentResult.create({
-  //     data: {
-  //       assessmentId: body.assessmentId,
-  //       assessmentTitle: body.assessmentTitle,
-  //       answers: body.answers,
-  //       totalScore: body.totalScore,
-  //       diagnosis: body.diagnosis,
-  //       userId: req.user.userId,
-  //     },
-  //   });
-  // }
-
-  // @Get('results/me')
-  // @UseGuards(JwtAuthGuard)
-  // async getMyResults(@Req() req: any) {
-  //   return this.prisma.assessmentResult.findMany({
-  //     where: { userId: req.user.userId },
-  //     orderBy: { createdAt: 'desc' },
-  //   });
-  // }
 }

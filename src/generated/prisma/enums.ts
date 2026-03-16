@@ -18,6 +18,14 @@ export const Role = {
 export type Role = (typeof Role)[keyof typeof Role]
 
 
+export const AuthProvider = {
+  EMAIL: 'EMAIL',
+  GOOGLE: 'GOOGLE'
+} as const
+
+export type AuthProvider = (typeof AuthProvider)[keyof typeof AuthProvider]
+
+
 export const MessageRole = {
   USER: 'USER',
   ASSISTANT: 'ASSISTANT',
@@ -27,9 +35,10 @@ export const MessageRole = {
 export type MessageRole = (typeof MessageRole)[keyof typeof MessageRole]
 
 
-export const AuthProvider = {
-  EMAIL: 'EMAIL',
-  GOOGLE: 'GOOGLE'
+export const CheckInSlot = {
+  MORNING: 'MORNING',
+  MIDDAY: 'MIDDAY',
+  EVENING: 'EVENING'
 } as const
 
-export type AuthProvider = (typeof AuthProvider)[keyof typeof AuthProvider]
+export type CheckInSlot = (typeof CheckInSlot)[keyof typeof CheckInSlot]
