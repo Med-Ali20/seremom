@@ -16,7 +16,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
 
 @Controller('check-ins')
-@UseGuards(JwtAuthGuard) 
+@UseGuards(JwtAuthGuard)
 export class CheckInsController {
   constructor(private readonly checkInsService: CheckInsService) {}
 
@@ -43,11 +43,13 @@ export class CheckInsController {
     @CurrentUser() user: { userId: string; email: string },
     @Query('start') start: string,
     @Query('end') end: string,
+    @Query('timezone') timezone?: string,
   ) {
     return this.checkInsService.findByDateRange(
       user.userId,
       new Date(start),
       new Date(end),
+      timezone,
     );
   }
 
