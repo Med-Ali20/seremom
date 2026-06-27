@@ -17,8 +17,8 @@
 
 import * as runtime from "@prisma/client/runtime/index-browser"
 
-export type * from '../models'
-export type * from './prismaNamespace'
+export type * from '../models.js'
+export type * from './prismaNamespace.js'
 
 export const Decimal = runtime.Decimal
 
@@ -62,7 +62,11 @@ export const ModelName = {
   JournalReflection: 'JournalReflection',
   JournalEntry: 'JournalEntry',
   Article: 'Article',
-  ArticleCategory: 'ArticleCategory'
+  ArticleCategory: 'ArticleCategory',
+  Subscriber: 'Subscriber',
+  Campaign: 'Campaign',
+  EmailEvent: 'EmailEvent',
+  SuppressionEntry: 'SuppressionEntry'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -241,6 +245,61 @@ export const ArticleCategoryScalarFieldEnum = {
 export type ArticleCategoryScalarFieldEnum = (typeof ArticleCategoryScalarFieldEnum)[keyof typeof ArticleCategoryScalarFieldEnum]
 
 
+export const SubscriberScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  firstName: 'firstName',
+  status: 'status',
+  segments: 'segments',
+  unsubToken: 'unsubToken',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SubscriberScalarFieldEnum = (typeof SubscriberScalarFieldEnum)[keyof typeof SubscriberScalarFieldEnum]
+
+
+export const CampaignScalarFieldEnum = {
+  id: 'id',
+  subject: 'subject',
+  fromName: 'fromName',
+  replyTo: 'replyTo',
+  segment: 'segment',
+  body: 'body',
+  status: 'status',
+  recipientCount: 'recipientCount',
+  sentCount: 'sentCount',
+  sentAt: 'sentAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CampaignScalarFieldEnum = (typeof CampaignScalarFieldEnum)[keyof typeof CampaignScalarFieldEnum]
+
+
+export const EmailEventScalarFieldEnum = {
+  id: 'id',
+  campaignId: 'campaignId',
+  subscriberId: 'subscriberId',
+  messageId: 'messageId',
+  type: 'type',
+  rawPayload: 'rawPayload',
+  createdAt: 'createdAt'
+} as const
+
+export type EmailEventScalarFieldEnum = (typeof EmailEventScalarFieldEnum)[keyof typeof EmailEventScalarFieldEnum]
+
+
+export const SuppressionEntryScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  reason: 'reason',
+  createdAt: 'createdAt'
+} as const
+
+export type SuppressionEntryScalarFieldEnum = (typeof SuppressionEntryScalarFieldEnum)[keyof typeof SuppressionEntryScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -254,6 +313,14 @@ export const JsonNullValueInput = {
 } as const
 
 export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: 'DbNull',
+  JsonNull: 'JsonNull'
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {

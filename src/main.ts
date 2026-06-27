@@ -4,9 +4,18 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { ValidationPipe } from '@nestjs/common';
 import { SanitizePipe } from './common/pipes/sanitize.pipe';
 import { join } from 'path';
+import * as express from 'express';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  // SNS sends text/plain
+  app.use(
+    '/webhooks/ses-sns',
+    express.text({
+      type: 'text/plain',
+    }),
+  );
 
   app.useGlobalPipes(
     new SanitizePipe(),

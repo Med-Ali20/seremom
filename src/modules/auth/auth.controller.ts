@@ -97,7 +97,8 @@ export class AuthController {
         this.configService.get<string>('FRONTEND_URL') ||
         'http://localhost:3001';
       res.redirect(
-        `${frontendUrl}/login?error=authentication_failed&message=${error.message}`,
+        //@ts-ignore
+        `${frontendUrl}/login?error=authentication_failed&message=${error?.message}`,
       );
     }
   }

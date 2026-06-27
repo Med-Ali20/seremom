@@ -185,3 +185,83 @@ model ArticleCategory {
   createdAt DateTime  @default(now())
   articles  Article[]
 }
+
+
+
+enum SubscriberStatus {
+  ACTIVE
+  BOUNCED
+  COMPLAINED
+  UNSUBSCRIBED
+}
+
+enum CampaignStatus {
+  DRAFT
+  QUEUED
+  SENDING
+  SENT
+  FAILED
+}
+
+enum EmailEventType {
+  SEND
+  DELIVERY
+  BOUNCE
+  COMPLAINT
+  OPEN
+  CLICK
+  REJECT
+}
+
+model Subscriber {
+  id         String           @id @default(cuid())
+  email      String           @unique
+  firstName  String?
+  status     SubscriberStatus @default(ACTIVE)
+  segments   String[]         @default([])
+  unsubToken String           @unique @default(uuid())
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+  events     EmailEvent[]
+
+  @@index([status])
+}
+
+model Campaign {
+  id             String         @id @default(cuid())
+  subject        String
+  fromName       String
+  replyTo        String?
+  segment        String
+  body           String
+  status         CampaignStatus @default(DRAFT)
+  recipientCount Int            @default(0)
+  sentCount      Int            @default(0)
+  sentAt         DateTime?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  events         EmailEvent[]
+}
+
+model EmailEvent {
+  id           String         @id @default(cuid())
+  campaign     Campaign?      @relation(fields: [campaignId], references: [id])
+  campaignId   String?
+  subscriber   Subscriber?    @relation(fields: [subscriberId], references: [id])
+  subscriberId String?
+  messageId    String?
+  type         EmailEventType
+  rawPayload   Json?
+  createdAt    DateTime       @default(now())
+
+  @@index([messageId])
+  @@index([campaignId])
+  @@index([subscriberId, type])
+}
+
+model SuppressionEntry {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  reason    String // "bounce" | "complaint" | "manual"
+  createdAt DateTime @default(now())
+}

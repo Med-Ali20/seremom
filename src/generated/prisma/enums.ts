@@ -42,3 +42,37 @@ export const CheckInSlot = {
 } as const
 
 export type CheckInSlot = (typeof CheckInSlot)[keyof typeof CheckInSlot]
+
+
+export const SubscriberStatus = {
+  ACTIVE: 'ACTIVE',
+  BOUNCED: 'BOUNCED',
+  COMPLAINED: 'COMPLAINED',
+  UNSUBSCRIBED: 'UNSUBSCRIBED'
+} as const
+
+export type SubscriberStatus = (typeof SubscriberStatus)[keyof typeof SubscriberStatus]
+
+
+export const CampaignStatus = {
+  DRAFT: 'DRAFT',
+  QUEUED: 'QUEUED',
+  SENDING: 'SENDING',
+  SENT: 'SENT',
+  FAILED: 'FAILED'
+} as const
+
+export type CampaignStatus = (typeof CampaignStatus)[keyof typeof CampaignStatus]
+
+
+export const EmailEventType = {
+  SEND: 'SEND',
+  DELIVERY: 'DELIVERY',
+  BOUNCE: 'BOUNCE',
+  COMPLAINT: 'COMPLAINT',
+  OPEN: 'OPEN',
+  CLICK: 'CLICK',
+  REJECT: 'REJECT'
+} as const
+
+export type EmailEventType = (typeof EmailEventType)[keyof typeof EmailEventType]

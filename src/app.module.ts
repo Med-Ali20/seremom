@@ -18,6 +18,11 @@ import { QuestionnaireModule } from './modules/questionnaire/questionnaire.modul
 import { UploadModule } from './modules/upload/upload.module';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { PrismaService } from './modules/prisma.service';
+import { EmailModule } from './modules/email/email.module';
+import { SubscribersModule } from './modules/subscribers/subscribers.module';
+import { CampaignsModule } from './modules/campaigns/campaigns.module';
+import { BullModule } from '@nestjs/bullmq';
 
 @Module({
   imports: [
@@ -52,6 +57,15 @@ import { APP_GUARD } from '@nestjs/core';
         limit: 3000,
       },
     ]),
+    EmailModule,
+    SubscribersModule,
+    CampaignsModule,
+    BullModule.forRoot({
+      connection: {
+        host: process.env.REDIS_HOST,
+        port: 6379,
+      },
+    }),
   ],
   controllers: [AppController],
   providers: [
@@ -61,6 +75,8 @@ import { APP_GUARD } from '@nestjs/core';
       provide: APP_GUARD,
       useClass: ThrottlerGuard,
     },
+    PrismaService,
   ],
 })
+
 export class AppModule {}
